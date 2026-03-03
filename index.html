@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure Pixel Studio — Creative Production & Art Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ed;
+    --cream: #ece8e1;
+    --gray: #8a8680;
+    --gray-light: #b8b4ae;
+    --accent: #c4a882;
+    --accent-dark: #a08968;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  ::selection { background: var(--accent); color: var(--black); }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- LOADER ---- */
+  .loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .loader-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 6vw, 5rem);
+    color: var(--white);
+    overflow: hidden;
+  }
+  .loader-text span {
+    display: inline-block;
+    animation: slideUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  @keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    mix-blend-mode: difference;
+    transition: padding 0.4s ease;
+  }
+  nav.scrolled { padding: 1rem 3rem; }
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+    transition: opacity 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--white);
+    transition: width 0.4s cubic-bezier(0.25, 0.1, 0, 1);
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ---- HERO ---- */
+  .hero {
+    height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(196,168,130,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(196,168,130,0.04) 0%, transparent 50%);
+  }
+  .hero-line {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1px; height: 0;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    animation: lineGrow 2s 1.5s ease forwards;
+    opacity: 0.3;
+  }
+  @keyframes lineGrow { to { height: 60vh; } }
+
+  .hero-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-title .line {
+    display: block;
+    overflow: hidden;
+  }
+  .hero-title .line span {
+    display: inline-block;
+    transform: translateY(110%);
+    animation: heroReveal 1s cubic-bezier(0.25, 0.1, 0, 1) forwards;
+  }
+  .hero-title .line:nth-child(2) span { animation-delay: 0.15s; }
+  .hero-title .line:nth-child(3) span { animation-delay: 0.3s; }
+  @keyframes heroReveal { to { transform: translateY(0); } }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--gray-light);
+    letter-spacing: 0.05em;
+    max-width: 480px;
+    line-height: 1.7;
+    position: relative; z-index: 2;
+    opacity: 0;
+    animation: fadeIn 1s 1s ease forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .hero-scroll {
+    position: absolute; bottom: 2rem; right: 3rem;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gray);
+    writing-mode: vertical-rl;
+    display: flex; align-items: center; gap: 0.8rem;
+    opacity: 0; animation: fadeIn 1s 2s ease forwards;
+  }
+  .hero-scroll::before {
+    content: '';
+    width: 1px; height: 40px;
+    background: var(--gray);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.3; } }
+
+  /* ---- SECTION COMMONS ---- */
+  section { padding: 8rem 3rem; position: relative; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--gray);
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    max-width: 800px;
+  }
+
+  /* ---- PORTFOLIO ---- */
+  .portfolio { background: var(--black); }
+
+  .portfolio-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .portfolio-count {
+    font-family: 'Instrument Serif', serif;
+    font-size: 6rem;
+    color: var(--accent);
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .brand-card {
+    padding: 2.5rem 2rem;
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: background 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+  }
+  .brand-card:hover {
+    background: rgba(196,168,130,0.06);
+  }
+  .brand-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width 0.6s cubic-bezier(0.25, 0.1, 0, 1);
+  }
+  .brand-card:hover::before { width: 100%; }
+
+  .brand-number {
+    font-size: 0.7rem;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    font-weight: 300;
+  }
+
+  .brand-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+    margin-top: 1.5rem;
+    transition: color 0.3s;
+  }
+  .brand-card:hover .brand-name { color: var(--accent); }
+
+  .brand-tag {
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--gray);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+  }
+
+  .brand-arrow {
+    margin-top: 1.5rem;
+    width: 24px; height: 24px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  .brand-card:hover .brand-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    border-color: var(--accent);
+  }
+  .brand-arrow svg { width: 10px; height: 10px; stroke: var(--accent); }
+
+  /* ---- ABOUT ---- */
+  .about {
+    background: var(--cream);
+    color: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about .section-label { color: var(--accent-dark); }
+  .about .section-label::before { background: var(--accent-dark); }
+
+  .about-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    font-weight: 300;
+    color: rgba(10,10,10,0.75);
+    margin-top: 2rem;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .stat {
+    padding: 2rem;
+    border: 1px solid rgba(10,10,10,0.08);
+    transition: border-color 0.4s;
+  }
+  .stat:hover { border-color: var(--accent-dark); }
+  .stat-number {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem;
+    color: var(--black);
+    line-height: 1;
+  }
+  .stat-label {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    font-weight: 300;
+  }
+
+  /* ---- SERVICES ---- */
+  .services-list {
+    margin-top: 4rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .service-item {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+    transition: padding-left 0.4s ease;
+  }
+  .service-item:hover { padding-left: 1.5rem; }
+  .service-item-left { display: flex; align-items: center; gap: 2rem; }
+  .service-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    opacity: 0.5;
+    min-width: 30px;
+  }
+  .service-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    letter-spacing: -0.01em;
+    transition: color 0.3s;
+  }
+  .service-item:hover .service-name { color: var(--accent); }
+  .service-desc {
+    font-size: 0.85rem;
+    color: var(--gray);
+    font-weight: 300;
+    max-width: 300px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* ---- MARQUEE ---- */
+  .marquee-section {
+    padding: 3rem 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .marquee {
+    display: flex;
+    animation: marqueeScroll 30s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee span {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: rgba(255,255,255,0.06);
+    padding: 0 2rem;
+    flex-shrink: 0;
+  }
+  .marquee span em {
+    font-style: italic;
+    color: rgba(196,168,130,0.15);
+  }
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ---- CONTACT ---- */
+  .contact {
+    min-height: 80vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .contact-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+  }
+  .contact-title em { font-style: italic; color: var(--accent); }
+
+  .contact-grid {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .contact-block h4 {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+  .contact-block a, .contact-block p {
+    font-size: 1rem;
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 300;
+    line-height: 1.8;
+    transition: color 0.3s;
+  }
+  .contact-block a:hover { color: var(--accent); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.75rem;
+    color: var(--gray);
+    font-weight: 300;
+  }
+
+  /* ---- GRID OVERLAY (decorative) ---- */
+  .grid-overlay {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 50;
+    display: flex; justify-content: space-between;
+    padding: 0 3rem;
+    opacity: 0.03;
+  }
+  .grid-overlay span {
+    width: 1px;
+    background: var(--white);
+  }
+
+  /* ---- SCROLL ANIMATIONS ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.1, 0, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav.scrolled { padding: 0.8rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 0 1.5rem 3rem; }
+    .hero-scroll { display: none; }
+    .about { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .brand-grid { grid-template-columns: 1fr 1fr; }
+    .service-desc { display: none; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .brand-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-text" id="loaderText"></div>
+</div>
+
+<!-- GRID OVERLAY -->
+<div class="grid-overlay">
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Pure Pixel Studio</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portföy</a></li>
+    <li><a href="#about">Hakkımızda</a></li>
+    <li><a href="#contact">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-line"></div>
+  <h1 class="hero-title">
+    <span class="line"><span>Görsel</span></span>
+    <span class="line"><span><em>hikayeleri</em></span></span>
+    <span class="line"><span>yaratıyoruz.</span></span>
+  </h1>
+  <p class="hero-sub">
+    Yemek endüstrisi için kreatif prodüksiyon ve sanat stüdyosu. 
+    Her projede estetik değer, teknik mükemmellik ve duygusal etki bir araya gelir.
+  </p>
+  <div class="hero-scroll">Keşfet<br>↓</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee" id="marquee">
+    <span>Photography <em>•</em></span>
+    <span>Videography <em>•</em></span>
+    <span>Art Direction <em>•</em></span>
+    <span>Food Styling <em>•</em></span>
+    <span>Brand Content <em>•</em></span>
+    <span>Post Production <em>•</em></span>
+    <span>Photography <em>•</em></span>
+    <span>Videography <em>•</em></span>
+    <span>Art Direction <em>•</em></span>
+    <span>Food Styling <em>•</em></span>
+    <span>Brand Content <em>•</em></span>
+    <span>Post Production <em>•</em></span>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-intro reveal">
+    <div>
+      <div class="section-label">Portföy</div>
+      <h2 class="section-title">Birlikte çalıştığımız<br><em>markalar</em></h2>
+    </div>
+    <div class="portfolio-count">15+</div>
+  </div>
+
+  <div class="brand-grid" id="brandGrid"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="reveal">
+    <div class="section-label">Hakkımızda</div>
+    <h2 class="section-title" style="color: var(--black);">Bağımsız sanatçılar,<br><em style="color: var(--accent-dark);">ortak vizyon.</em></h2>
+    <p class="about-text">
+      Pure Pixel Studio, yemek endüstrisi için kreatif prodüksiyon ve reklam hizmetlerinde uzmanlaşmış bağımsız bir kolektif stüdyodur. 
+      Görsel hikaye anlatımının gücünü derin sektör uzmanlığıyla birleştirerek marka anlatılarını estetik, otantik ve duygusal olarak etkileyici bir şekilde görünür kılıyoruz.
+    </p>
+    <p class="about-text" style="margin-top: 1rem;">
+      Ekibimiz fotoğraf, video, ses tasarımı ve post-prodüksiyon alanlarında uzmanlaşmış bağımsız sanatçılardan oluşur. 
+      Proje bazlı iş birliği modelimizle, her marka için en uygun kreatif yetenekleri bir araya getiriyoruz.
+    </p>
+  </div>
+  <div class="about-stats reveal">
+    <div class="stat">
+      <div class="stat-number">15+</div>
+      <div class="stat-label">Marka İş Birliği</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">1+</div>
+      <div class="stat-label">Yıllık Deneyim</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Kreatif Tutku</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Yaratıcı Enerji</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="reveal">
+    <div class="section-label">Hizmetler</div>
+    <h2 class="section-title">Neler <em>yapıyoruz?</em></h2>
+  </div>
+  <div class="services-list reveal">
+    <div class="service-item">
+      <div class="service-item-left">
+        <span class="service-num">01</span>
+        <span class="service-name">Fotoğraf</span>
+      </div>
+      <span class="service-desc">Yemek, mekan ve ürün fotoğrafçılığı ile markanızı görselleştiriyoruz.</span>
+    </div>
+    <div class="service-item">
+      <div class="service-item-left">
+        <span class="service-num">02</span>
+        <span class="service-name">Videografi</span>
+      </div>
+      <span class="service-desc">Profesyonel video prodüksiyon ile hikayenizi hareketle anlatıyoruz.</span>
+    </div>
+    <div class="service-item">
+      <div class="service-item-left">
+        <span class="service-num">03</span>
+        <span class="service-name">Sosyal Medya İçerik</span>
+      </div>
+      <span class="service-desc">Markanızın dijital varlığını güçlendiren içerikler üretiyoruz.</span>
+    </div>
+    <div class="service-item">
+      <div class="service-item-left">
+        <span class="service-num">04</span>
+        <span class="service-name">Art Direction</span>
+      </div>
+      <span class="service-desc">Projenizin kreatif yönünü belirleyip kusursuz bir görsel dil oluşturuyoruz.</span>
+    </div>
+    <div class="service-item">
+      <div class="service-item-left">
+        <span class="service-num">05</span>
+        <span class="service-name">Post Prodüksiyon</span>
+      </div>
+      <span class="service-desc">Renk düzenleme, retouching ve ses tasarımı ile sonucu mükemmelleştiriyoruz.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <div class="section-label">İletişim</div>
+    <h2 class="contact-title">Haydi birlikte<br><em>çalışalım.</em></h2>
+    <div class="contact-grid">
+      <div class="contact-block">
+        <h4>Web</h4>
+        <a href="http://www.purepixel.studio/" target="_blank">www.purepixel.studio</a>
+      </div>
+      <div class="contact-block">
+        <h4>Instagram</h4>
+        <a href="https://instagram.com/purepixel.studio" target="_blank">@purepixel.studio</a>
+      </div>
+      <div class="contact-block">
+        <h4>Konum</h4>
+        <p>İstanbul, Türkiye</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Pure Pixel Studio</span>
+  <span>Collective Digital Content Production & Art Studio</span>
+</footer>
+
+<script>
+// BRANDS DATA
+const brands = [
+  { name: "Taff Burger", tag: "Restoran • Fotoğraf & Video", ig: "taffburger" },
+  { name: "Onion Cafe & Restaurant", tag: "Kafe & Restoran • İçerik Üretimi", ig: "onioncaferestaurant" },
+  { name: "Mashhad Istanbul", tag: "Restoran • Mekan Fotoğrafçılığı", ig: "mashhadistanbul" },
+  { name: "Ethique Patisserie", tag: "Pastane • Ürün & Sosyal Medya", ig: "ethique.pb" },
+  { name: "TiTi Meat House", tag: "Restoran • Kreatif Prodüksiyon", ig: "titi.restaurant" },
+  { name: "Kurukahveci Nuri Toplar", tag: "Kahve • Fotoğraf & Video", ig: "kurukahvecinuritoplar" },
+  { name: "Florya Şazeli", tag: "Restoran • Yemek Fotoğrafçılığı", ig: "floryasazeli" },
+  { name: "Choco Zuma", tag: "Çikolata • Ürün Çekimi", ig: "choco.zuma" },
+  { name: "Mendel's", tag: "Restoran • İçerik Üretimi", ig: null },
+  { name: "Upperdeck", tag: "Restoran • Mekan & Yemek", ig: null },
+  { name: "Kasnak", tag: "Restoran • Fotoğraf", ig: null },
+  { name: "Paye Patisserie", tag: "Pastane • Ürün Çekimi", ig: null },
+  { name: "Smash & Sweet", tag: "Restoran • Fotoğraf & Video", ig: null },
+  { name: "Buontalenti", tag: "Dondurma • Ürün Çekimi", ig: null },
+  { name: "Bonkers", tag: "Restoran • İçerik Üretimi", ig: null },
+];
+
+// RENDER BRAND GRID
+const grid = document.getElementById('brandGrid');
+brands.forEach((b, i) => {
+  const card = document.createElement('div');
+  card.className = 'brand-card reveal';
+  card.innerHTML = `
+    <div>
+      <div class="brand-number">${String(i + 1).padStart(2, '0')}</div>
+      <div class="brand-name">${b.name}</div>
+      <div class="brand-tag">${b.tag}</div>
+    </div>
+    <div class="brand-arrow">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M1 6h10M7 2l4 4-4 4"/>
+      </svg>
+    </div>
+  `;
+  if (b.ig) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      window.open(`https://instagram.com/${b.ig}`, '_blank');
+    });
+  }
+  grid.appendChild(card);
+});
+
+// LOADER
+const loaderText = document.getElementById('loaderText');
+const letters = 'Pure Pixel Studio'.split('');
+letters.forEach((l, i) => {
+  const span = document.createElement('span');
+  span.textContent = l === ' ' ? '\u00A0' : l;
+  span.style.animationDelay = `${i * 0.05}s`;
+  loaderText.appendChild(span);
+});
+setTimeout(() => {
+  document.getElementById('loader').classList.add('hidden');
+}, 2000);
+
+// NAV SCROLL
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// Re-observe after brand cards are added
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}, 100);
+</script>
+
+</body>
+</html>
