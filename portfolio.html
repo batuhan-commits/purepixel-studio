@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pure Pixel Studio — Portföy Seçkisi</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23111111'/><rect x='3' y='3' width='26' height='26' fill='%23f5f0e8'/><rect x='15' y='5' width='12' height='12' fill='%23e85d1e'/></svg>" type="image/svg+xml">
+<link rel="apple-touch-icon" href="https://res.cloudinary.com/dsegp515d/image/upload/v1773089404/logo_fnadzs.png">
+<meta property="og:image" content="https://res.cloudinary.com/dsegp515d/image/upload/v1773089404/logo_fnadzs.png">
+<meta property="og:title" content="Pure Pixel Studio — Portföy Seçkisi">
+<meta property="og:description" content="Yemek, mekan ve ürün fotoğrafçılığı & video prodüksiyon stüdyosu. İstanbul.">
+<meta property="og:type" content="website">
+<meta name="description" content="Pure Pixel Studio — Yemek, mekan ve ürün fotoğrafçılığı & video prodüksiyon stüdyosu. İstanbul, Türkiye.">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --cream: #f5f0e8;
+  --black: #111111;
+  --orange: #e85d1e;
+  --warm-gray: #c8bfb0;
+  --dark-gray: #222222;
+  --text-muted: #888880;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Syne', sans-serif; background: var(--cream); color: var(--black); overflow-x: hidden; cursor: none; }
+
+/* CURSOR */
+.cursor { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); will-change: left, top; opacity:0; transition: opacity .3s; }
+.cursor.active { opacity:1; }
+.cursor-follower { width: 36px; height: 36px; border: 1px solid var(--black); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .3s, height .3s, opacity .3s; will-change: left, top; opacity:0; }
+.cursor-follower.active { opacity:1; }
+.cursor-follower.hover { width: 56px; height: 56px; background: rgba(232, 93, 30, 0.1); border-color: var(--orange); }
+@media (hover:none),(max-width:900px) { body{cursor:auto;} .cursor,.cursor-follower{display:none!important;} }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 56px; background: var(--cream); border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.nav-left { display: flex; align-items: center; gap: 50px; }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-img {
+  height: 118px; width: auto; display: block;
+}
+.nav-links { display: flex; list-style: none; gap: 30px; }
+.nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; color: var(--black); transition: color .2s; }
+.nav-links a:hover { color: var(--orange); }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-contact-btn {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+  background: var(--black); color: white; border: 1px solid var(--black); padding: 10px 22px; transition: all 0.3s;
+}
+.nav-contact-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
+
+/* NAV DROPDOWN FOR BRANDS */
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { cursor: pointer; }
+.nav-dropdown-menu {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  min-width: 220px; background: white; border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 12px 40px rgba(0,0,0,.1); padding: 12px 0;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .25s, visibility .25s, transform .25s;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 100;
+}
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a {
+  display: block; padding: 8px 20px; font-size: 12px !important; font-weight: 600 !important;
+  letter-spacing: 0.5px !important; text-transform: none !important;
+  color: var(--black) !important; transition: all .2s;
+}
+.nav-dropdown-menu a:hover { background: rgba(232,93,30,.06); color: var(--orange) !important; padding-left: 24px; }
+
+/* HAMBURGER */
+.nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; z-index:200; }
+.nav-hamburger span { display:block; width:26px; height:2px; background:var(--black); transition:transform .35s,opacity .35s; }
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* MOBILE MENU */
+.mobile-menu { display:none; position:fixed; inset:0; z-index:150; background:var(--black); flex-direction:column; align-items:center; justify-content:flex-start; padding-top:100px; gap:0; overflow-y:auto; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--cream); text-decoration:none; letter-spacing:-1px; transition:color .2s; padding:16px 0; }
+.mobile-menu a:hover { color:var(--orange); }
+.mobile-menu a em { font-style:italic; color:var(--orange); }
+.mobile-menu-close { position:absolute; top:24px; right:24px; background:none; border:none; color:var(--cream); font-size:32px; cursor:pointer; line-height:1; }
+.mobile-menu-footer { position:absolute; bottom:40px; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.25); }
+
+/* MOBILE BRANDS ACCORDION */
+.mobile-brands-toggle { background:none; border:none; color:var(--cream); font-family:'Playfair Display',serif; font-size:32px; font-weight:900; cursor:pointer; padding:16px 0; display:flex; align-items:center; gap:12px; }
+.mobile-brands-toggle svg { width:18px; height:18px; transition:transform .3s; }
+.mobile-brands-toggle.open svg { transform:rotate(180deg); }
+.mobile-brands-list { display:none; flex-direction:column; gap:0; padding:0 0 16px; width:100%; max-width:320px; }
+.mobile-brands-list.open { display:flex; }
+.mobile-brands-list a { font-family:'Syne',sans-serif !important; font-size:15px !important; font-weight:600 !important; color:rgba(245,240,232,.6) !important; padding:10px 24px !important; letter-spacing:0 !important; border-left:2px solid rgba(255,255,255,.08); }
+.mobile-brands-list a:hover { color:var(--orange) !important; border-left-color:var(--orange); }
+
+/* HERO */
+#hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; position:relative; overflow:hidden; }
+.hero-left { background:var(--black); display:flex; flex-direction:column; justify-content:flex-end; padding:160px 56px 80px; position:relative; overflow:hidden; }
+.hero-left::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); z-index:0; }
+.hero-eyebrow { font-size:10px; letter-spacing:5px; text-transform:uppercase; color:var(--orange); margin-bottom:32px; opacity:0; animation:slideRight .9s .4s cubic-bezier(.16,1,.3,1) forwards; position:relative; z-index:1; }
+.hero-title { font-family:'Playfair Display',serif; font-size:clamp(52px,5.5vw,88px); font-weight:900; line-height:1.0; color:var(--cream); margin-bottom:40px; opacity:0; animation:slideRight .9s .6s cubic-bezier(.16,1,.3,1) forwards; position:relative; z-index:1; }
+.hero-title em { font-style:italic; color:var(--orange); }
+.hero-desc { font-size:14px; line-height:1.8; color:rgba(245,240,232,.5); max-width:380px; margin-bottom:56px; font-weight:400; opacity:0; animation:slideRight .9s .8s cubic-bezier(.16,1,.3,1) forwards; position:relative; z-index:1; }
+.hero-cta { display:flex; align-items:center; gap:32px; opacity:0; animation:slideRight .9s 1s cubic-bezier(.16,1,.3,1) forwards; position:relative; z-index:1; }
+.btn-main { background:var(--orange); color:white; border:none; padding:18px 44px; font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:background .2s,transform .2s; text-decoration:none; display:inline-block; }
+.btn-main:hover { background:#d44d0e; transform:translateY(-2px); }
+.hero-scroll-text { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.3); }
+.hero-counter { position:absolute; bottom:48px; right:56px; text-align:right; color:rgba(245,240,232,.2); font-size:10px; letter-spacing:2px; z-index:1; }
+.hero-counter strong { display:block; font-family:'Playfair Display',serif; font-size:48px; font-weight:900; color:rgba(245,240,232,.08); line-height:1; }
+.hero-marks { position: absolute; top: 50%; right: -60px; transform: translateY(-60%); pointer-events: none; z-index: 0; opacity: 0; animation: fadeIn 1.2s 1.2s forwards; }
+.big-mark { width: 220px; height: 220px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); position: relative; animation: rotateMark 18s linear infinite; }
+.big-mark::after { content: ''; position: absolute; width: 88px; height: 88px; background: var(--orange); opacity: 0.18; top: 40px; right: 40px; animation: rotateMark 18s linear infinite reverse; }
+.small-mark { width: 100px; height: 100px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); position: absolute; bottom: -40px; left: -40px; animation: rotateMark 12s linear infinite; }
+.small-mark::after { content: ''; position: absolute; width: 40px; height: 40px; background: var(--orange); opacity: 0.12; top: 18px; right: 18px; animation: rotateMark 12s linear infinite reverse; }
+@keyframes rotateMark { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+.hero-right { position:relative; overflow:hidden; }
+.hero-slider { position:absolute; inset:0; }
+.hero-slider-img { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1.4s ease; }
+.hero-slider-img.active { opacity:1; }
+.hero-slider-img::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.2); }
+.hero-clients { position:absolute; bottom:48px; left:48px; right:48px; z-index:2; }
+.hero-clients-label { font-size:9px; letter-spacing:4px; text-transform:uppercase; color:rgba(245,240,232,.5); margin-bottom:16px; }
+.hero-clients-list { display:flex; gap:16px; flex-wrap:wrap; }
+.hero-clients-list span { font-size:11px; font-weight:700; letter-spacing:1px; color:rgba(245,240,232,.5); text-transform:uppercase; }
+
+/* MARQUEE */
+.marquee-wrap { background:var(--orange); overflow:hidden; padding:12px 0; }
+.marquee-track { display:flex; animation:marquee 22s linear infinite; white-space:nowrap; width:max-content; }
+.marquee-track span { font-size:9px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:white; padding:0 28px; }
+.marquee-track span.dot { color:rgba(255,255,255,.4); padding:0 6px; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* VISION SECTION */
+#vision { padding: 0; }
+.vision-block { padding: 100px 56px; }
+.vision-block-1 { background: var(--cream); }
+.vision-block-2 { background: var(--orange); }
+.vision-block-3 { background: var(--dark-gray); }
+.vision-text {
+  max-width: 800px; margin: 0 auto;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 2.2vw, 26px);
+  line-height: 1.7; font-weight: 400;
+}
+.vision-block-1 .vision-text { color: var(--black); }
+.vision-block-2 .vision-text { color: white; }
+.vision-block-3 .vision-text { color: rgba(245,240,232,.85); }
+.vision-text .highlight {
+  background: var(--orange); color: white; padding: 2px 6px; font-weight: 700;
+  display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.vision-block-2 .vision-text .highlight { background: white; color: var(--orange); }
+.vision-block-3 .vision-text .highlight { background: var(--orange); color: white; }
+
+/* ABOUT */
+.section-tag { font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--orange); margin-bottom:32px; display:flex; align-items:center; gap:12px; }
+.section-tag::before { content:''; width:32px; height:1px; background:var(--orange); }
+#about { display:grid; grid-template-columns:1fr 1fr; min-height:90vh; }
+.about-left { background:var(--black); padding:120px 56px; display:flex; flex-direction:column; justify-content:space-between; }
+.about-right { padding:120px 56px; display:flex; flex-direction:column; justify-content:center; background:var(--cream); }
+.about-headline { font-family:'Playfair Display',serif; font-size:clamp(36px,3.5vw,60px); font-weight:900; line-height:1.1; color:var(--cream); margin-bottom:40px; }
+.about-headline em { font-style:italic; color:var(--orange); }
+.about-body { font-size:14px; line-height:1.9; color:rgba(245,240,232,.55); font-weight:400; }
+.about-stats { display:grid; grid-template-columns:1fr 1fr; gap:32px; border-top:1px solid rgba(255,255,255,.08); padding-top:40px; margin-top:40px; }
+.stat-n { font-family:'Playfair Display',serif; font-size:52px; font-weight:900; color:var(--orange); line-height:1; margin-bottom:6px; }
+.stat-l { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.3); }
+.about-quote { font-family:'Playfair Display',serif; font-size:clamp(22px,2.5vw,38px); font-weight:400; font-style:italic; line-height:1.35; color:var(--black); margin-bottom:24px; }
+.about-quote-attr { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); }
+.about-values { margin-top:56px; }
+.value-item { display:flex; align-items:center; gap:24px; padding:22px 0; border-bottom:1px solid rgba(0,0,0,.08); transition:gap .3s; }
+.value-item:hover { gap:32px; }
+.value-num { font-family:'Playfair Display',serif; font-size:13px; color:var(--orange); font-style:italic; flex-shrink:0; }
+.value-name { font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; flex:1; }
+.value-arrow { color:var(--text-muted); font-size:18px; }
+
+/* SERVICES / PRICING */
+#services { background:var(--cream); padding:120px 56px; }
+.services-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:80px; }
+.services-title { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,96px); font-weight:900; line-height:.95; letter-spacing:-2px; }
+.services-title em { font-style:italic; color:var(--orange); }
+.services-intro { max-width:320px; font-size:13px; line-height:1.8; color:var(--text-muted); font-weight:400; padding-bottom:8px; }
+
+/* PRICING PACKS */
+.packs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 60px; }
+.pack-card {
+  background: white; border: 1px solid rgba(0,0,0,.08); padding: 40px 32px;
+  display: flex; flex-direction: column; transition: all .4s cubic-bezier(.16,1,.3,1);
+  position: relative;
+}
+.pack-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.08); }
+.pack-card.popular { border-color: var(--orange); }
+.pack-card.popular::before {
+  content:'En Popüler'; position:absolute; top:-12px; left:32px;
+  background:var(--orange); color:white; font-size:9px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase; padding:4px 14px;
+}
+.pack-name { font-family:'Playfair Display',serif; font-size:24px; font-weight:900; color:var(--orange); margin-bottom:20px; text-transform:uppercase; letter-spacing:1px; }
+.pack-desc { font-size:13px; line-height:1.7; color:var(--text-muted); margin-bottom:24px; flex-grow:0; }
+.pack-content-summary { margin-bottom:20px; }
+.pack-content-summary span { display:inline-block; font-size:12px; font-weight:700; letter-spacing:1px; color:var(--black); margin-right:16px; margin-bottom:6px; }
+.pack-toggle-btn {
+  background:none; border:1px solid rgba(0,0,0,.12); padding:12px 20px;
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer; transition:all .25s; color:var(--black);
+  display:flex; align-items:center; justify-content:space-between; width:100%; margin-bottom:20px;
+}
+.pack-toggle-btn:hover { border-color:var(--orange); color:var(--orange); }
+.pack-toggle-btn svg { width:14px; height:14px; transition:transform .3s; }
+.pack-toggle-btn.open svg { transform:rotate(180deg); }
+.pack-details { display:none; padding:0; margin-bottom:24px; }
+.pack-details.open { display:block; }
+.pack-details ul { list-style:none; padding:0; }
+.pack-details li { font-size:12px; line-height:1.6; color:#555; padding:6px 0; border-bottom:1px solid rgba(0,0,0,.04); display:flex; align-items:flex-start; gap:8px; }
+.pack-details li::before { content:'—'; color:var(--orange); font-weight:700; flex-shrink:0; }
+.pack-cta {
+  margin-top:auto; background:var(--black); color:var(--cream); border:none;
+  padding:16px 0; font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:all .25s;
+  text-align:center; text-decoration:none; display:block;
+}
+.pack-cta:hover { background:var(--orange); }
+
+/* REFERENCES STRIP */
+.references-strip { margin-top: 80px; border-top: 1px solid rgba(0,0,0,.08); padding-top: 40px; }
+.references-strip-label { font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--text-muted); margin-bottom:24px; display:flex; align-items:center; gap:12px; }
+.references-strip-label::before { content:''; width:32px; height:1px; background:var(--text-muted); }
+.ref-logos { display:flex; flex-wrap:wrap; gap:20px; align-items:center; }
+.ref-logo-item {
+  height:48px; width:auto; filter:grayscale(1) opacity(.45);
+  transition:filter .3s; cursor:pointer;
+}
+.ref-logo-item:hover { filter:grayscale(0) opacity(1); }
+
+/* PORTFOLIO PREVIEW CTA */
+#portfolio-preview { background:var(--black); padding:100px 56px; text-align:center; }
+.portfolio-preview-title { font-family:'Playfair Display',serif; font-size:clamp(36px,4vw,64px); font-weight:900; color:var(--cream); line-height:1.05; margin-bottom:20px; }
+.portfolio-preview-title em { font-style:italic; color:var(--orange); }
+.portfolio-preview-desc { font-size:14px; color:rgba(245,240,232,.45); margin-bottom:40px; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7; }
+.portfolio-preview-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:3px; margin-bottom:48px; }
+.portfolio-preview-img {
+  aspect-ratio:1; background-size:cover; background-position:center;
+  position:relative; overflow:hidden; transition:transform .5s;
+}
+.portfolio-preview-img::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.25); transition:background .3s; }
+.portfolio-preview-img:hover::after { background:rgba(232,93,30,.3); }
+.btn-outline {
+  display:inline-block; border:1px solid rgba(245,240,232,.3); color:var(--cream);
+  padding:18px 48px; font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase; text-decoration:none;
+  transition:all .3s;
+}
+.btn-outline:hover { background:var(--orange); border-color:var(--orange); }
+
+/* BRANDS */
+#brands { background:var(--cream); padding:80px 56px; border-top:1px solid rgba(0,0,0,.06); }
+.brands-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:56px; }
+.brands-title { font-family:'Playfair Display',serif; font-size:clamp(36px,4vw,64px); font-weight:900; line-height:1; letter-spacing:-1px; }
+.brands-title em { font-style:italic; color:var(--orange); }
+.brands-subtitle { font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); }
+.brands-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.08); }
+.brand-cell { background:var(--cream); min-height:160px; position:relative; overflow:hidden; cursor:pointer; display:flex; flex-direction:column; justify-content:flex-end; }
+.brand-cell-bg { position:absolute; inset:0; background-size:cover; background-position:center; transform:scale(1.05); opacity:.18; transition:transform .6s cubic-bezier(.16,1,.3,1),opacity .4s; }
+.brand-cell:hover .brand-cell-bg { transform:scale(1.0); opacity:.6; }
+.brand-cell-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(17,17,17,.8) 0%,rgba(17,17,17,0) 60%); opacity:0; transition:opacity .4s; }
+.brand-cell:hover .brand-cell-overlay { opacity:1; }
+.brand-cell-content { position:relative; z-index:2; padding:18px 18px 16px; }
+.brand-cell-cat { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); transition:color .3s; display:block; margin-bottom:4px; }
+.brand-cell:hover .brand-cell-cat { color:rgba(245,240,232,.45); }
+.brand-cell-name { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--black); line-height:1.2; transition:color .3s; }
+.brand-cell:hover .brand-cell-name { color:var(--cream); }
+.brand-cell-service { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:rgba(0,0,0,.3); margin-top:4px; transition:color .3s; display:block; }
+.brand-cell:hover .brand-cell-service { color:var(--orange); }
+.brand-cell::after { content:'→'; position:absolute; top:14px; right:14px; color:var(--orange); font-size:13px; opacity:0; transition:opacity .3s,transform .3s; transform:translateX(-6px); z-index:3; }
+.brand-cell:hover::after { opacity:1; transform:translateX(0); }
+
+/* CONTACT */
+#contact { background:var(--cream); display:grid; grid-template-columns:1fr 1fr; min-height:100vh; }
+.contact-left { background:var(--black); padding:120px 56px; display:flex; flex-direction:column; justify-content:space-between; }
+.contact-right { padding:120px 56px; display:flex; flex-direction:column; justify-content:center; }
+.contact-title { font-family:'Playfair Display',serif; font-size:clamp(42px,4.5vw,72px); font-weight:900; color:var(--cream); line-height:1.05; margin-bottom:32px; }
+.contact-title em { font-style:italic; color:var(--orange); }
+.contact-body { font-size:14px; line-height:1.8; color:rgba(245,240,232,.45); max-width:360px; font-weight:400; }
+.contact-icons { display:flex; gap:20px; align-items:center; }
+.contact-icon-link {
+  width:48px; height:48px; border-radius:50%; border:1px solid rgba(245,240,232,.15);
+  display:flex; align-items:center; justify-content:center; color:rgba(245,240,232,.45);
+  text-decoration:none; transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.contact-icon-link svg { width:22px; height:22px; }
+.contact-icon-link:hover { color:var(--orange); border-color:var(--orange); background:rgba(232,93,30,.1); transform:translateY(-3px); box-shadow:0 6px 20px rgba(232,93,30,.15); }
+.form-title { font-family:'Playfair Display',serif; font-size:32px; font-weight:700; margin-bottom:48px; line-height:1.2; }
+.form-title em { font-style:italic; color:var(--orange); }
+.form-group { margin-bottom:32px; }
+.form-label { display:block; font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px; }
+.form-input,.form-textarea { width:100%; background:transparent; border:none; border-bottom:1px solid rgba(0,0,0,.15); padding:12px 0; font-family:'Syne',sans-serif; font-size:15px; font-weight:500; color:var(--black); outline:none; transition:border-color .3s; }
+.form-input:focus,.form-textarea:focus { border-color:var(--orange); }
+.form-textarea { resize:none; height:80px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.form-options { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+.form-option { padding:10px 20px; border:1px solid rgba(0,0,0,.15); font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; transition:all .2s; background:transparent; font-family:'Syne',sans-serif; color:var(--black); }
+.form-option:hover,.form-option.active { background:var(--black); color:var(--cream); border-color:var(--black); }
+.form-submit { background:var(--black); color:var(--cream); border:none; padding:20px 48px; font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:background .2s,transform .2s; margin-top:16px; }
+.form-submit:hover { background:var(--orange); transform:translateY(-2px); }
+
+/* FOOTER */
+footer { background:var(--black); padding:60px 56px 40px; border-top:1px solid rgba(255,255,255,.06); }
+.footer-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:60px; }
+.footer-logo-wrap { display:flex; align-items:center; gap:16px; }
+.footer-logo-mark { width:44px; height:44px; background:var(--cream); position:relative; }
+.footer-logo-mark::after { content:''; position:absolute; width:17px; height:17px; background:var(--orange); top:8px; right:8px; }
+.footer-brand { font-size:13px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--cream); }
+.footer-brand span { display:block; font-weight:400; font-size:10px; letter-spacing:3px; color:rgba(255,255,255,.3); }
+.footer-nav { display:flex; gap:36px; }
+.footer-nav a { font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.35); text-decoration:none; transition:color .2s; }
+.footer-nav a:hover { color:var(--cream); }
+.footer-socials { display:flex; gap:20px; }
+.footer-socials a { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.25); text-decoration:none; transition:color .2s; }
+.footer-socials a:hover { color:var(--orange); }
+.footer-bottom { display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(255,255,255,.06); padding-top:32px; }
+.footer-copy { font-size:11px; color:rgba(255,255,255,.2); letter-spacing:1px; }
+.footer-tagline { font-family:'Playfair Display',serif; font-size:13px; font-style:italic; color:rgba(255,255,255,.2); }
+
+/* ANIMATIONS */
+@keyframes slideRight { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:translateX(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.reveal { opacity:0; transform:translateY(50px); transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:.12s; }
+.reveal-delay-2 { transition-delay:.24s; }
+.reveal-delay-3 { transition-delay:.36s; }
+
+/* UX */
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+section[id] { scroll-margin-top: 80px; }
+::selection { background: var(--orange); color: white; }
+img, svg { max-width: 100%; height: auto; }
+
+/* BACK TO TOP */
+.back-to-top { position:fixed; bottom:32px; right:32px; width:48px; height:48px; background:var(--black); color:var(--cream); border:none; border-radius:50%; font-size:20px; cursor:pointer; z-index:90; opacity:0; pointer-events:none; transition:opacity .3s, background .2s, transform .2s; display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 20px rgba(0,0,0,.15); }
+.back-to-top.visible { opacity:1; pointer-events:auto; }
+.back-to-top:hover { background:var(--orange); transform:translateY(-3px); }
+
+/* LOADING OVERLAY */
+.page-loader { position:fixed; inset:0; background:var(--black); z-index:10000; display:flex; align-items:center; justify-content:center; transition:opacity .6s, visibility .6s; }
+.page-loader.hidden { opacity:0; visibility:hidden; }
+.loader-mark { width:48px; height:48px; background:transparent; border:2px solid rgba(245,240,232,.15); position:relative; animation:rotateMark 2s linear infinite; }
+.loader-mark::after { content:''; position:absolute; width:20px; height:20px; background:var(--orange); top:8px; right:8px; }
+
+/* SERVICES — PDF FAITHFUL */
+.services-packs-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.3); }
+.svc-pack { padding:32px 28px; border-right:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; }
+.svc-pack:last-child { border-right:none; }
+.svc-pack-name { font-family:'Oswald',sans-serif; font-size:clamp(20px,2vw,28px); font-weight:400; color:var(--orange); text-transform:uppercase; letter-spacing:3px; margin-bottom:24px; padding-bottom:16px; border-bottom:3px solid var(--orange); line-height:1.1; }
+.svc-pack-desc { font-size:12px; line-height:1.65; color:rgba(245,240,232,.5); margin-bottom:24px; }
+
+/* Toggle buttons */
+.svc-toggle {
+  background:none; border:none; padding:12px 0; width:100%;
+  display:flex; align-items:center; justify-content:space-between;
+  cursor:pointer; border-top:1px solid rgba(255,255,255,.06);
+  transition:all .2s;
+}
+.svc-toggle span { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; font-style:italic; color:var(--orange); }
+.svc-toggle svg { width:14px; height:14px; color:var(--orange); transition:transform .4s cubic-bezier(.16,1,.3,1); flex-shrink:0; }
+.svc-toggle.open svg { transform:rotate(180deg); }
+.svc-toggle:hover span { color:white; }
+
+/* Toggle content — animated */
+.svc-toggle-content { max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.16,1,.3,1), opacity .3s, padding .3s; opacity:0; padding:0 0; }
+.svc-toggle-content.open { max-height:500px; opacity:1; padding:8px 0 16px; }
+
+.svc-content-nums span { display:block; font-size:14px; font-weight:700; color:var(--cream); line-height:2; }
+.svc-toggle-content ul { list-style:none; padding:0; margin:0; }
+.svc-toggle-content li { font-size:11px; line-height:1.5; color:rgba(245,240,232,.45); padding:4px 0; display:flex; align-items:flex-start; gap:8px; }
+.svc-toggle-content li::before { content:'–'; color:var(--orange); flex-shrink:0; font-weight:700; }
+
+/* CTA */
+.svc-cta {
+  margin-top:auto; display:block; text-align:center; padding:16px; text-decoration:none;
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; background:var(--orange); color:white; transition:all .25s;
+}
+.svc-cta:hover { background:#d44d0e; transform:translateY(-2px); }
+
+/* Reference logo grid */
+.ref-logo-grid { display:grid; grid-template-columns:repeat(8,1fr); gap:2px; max-width:900px; margin:0 auto; }
+.ref-logo-cell { background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.08); padding:16px 12px; display:flex; align-items:center; justify-content:center; min-height:60px; transition:all .3s; }
+.ref-logo-cell:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.15); }
+.ref-logo-cell span { font-family:'Playfair Display',serif; font-size:13px; font-weight:700; color:rgba(245,240,232,.4); letter-spacing:1px; white-space:nowrap; transition:color .3s; }
+.ref-logo-cell:hover span { color:var(--cream); }
+
+/* PLAN TOGGLE STYLES */
+.pack-plan-toggle {
+  background:none; border:1px solid var(--orange); padding:12px 20px;
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer; color:var(--orange); width:100%;
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;
+  transition:all .3s;
+}
+.pack-plan-toggle:hover { background:var(--orange); color:white; }
+.pack-plan-toggle svg { width:14px; height:14px; transition:transform .4s cubic-bezier(.16,1,.3,1); }
+.pack-plan-toggle.open svg { transform:rotate(180deg); }
+.pack-plan-details {
+  max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.16,1,.3,1), opacity .4s; opacity:0;
+}
+.pack-plan-details.open { max-height:600px; opacity:1; }
+.pack-plan-details ul { list-style:none; padding:0; margin:0 0 20px; }
+.pack-plan-details li { font-size:11px; line-height:1.5; color:rgba(245,240,232,.5); padding:5px 0; border-bottom:1px solid rgba(255,255,255,.04); display:flex; align-items:flex-start; gap:8px; }
+.pack-plan-details li::before { content:'–'; color:var(--orange); flex-shrink:0; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:1200px) {
+  .packs-grid { grid-template-columns: repeat(2, 1fr); }
+  .brands-grid{grid-template-columns:repeat(4,1fr);}
+  .portfolio-preview-grid { grid-template-columns:repeat(4,1fr); }
+}
+@media (max-width:900px) {
+  nav{padding:12px 16px;flex-wrap:wrap;gap:8px;}
+  .nav-logo-img{height:90px!important;}
+  .nav-left{gap:0;flex:1;min-width:0;}
+  .nav-links{gap:12px;flex-wrap:wrap;justify-content:center;order:3;width:100%;padding:4px 0 0;}
+  .nav-links a{font-size:9px;letter-spacing:1px;}
+  .nav-contact-btn{font-size:9px;letter-spacing:1px;padding:7px 14px;}
+  .nav-hamburger{display:none!important;}
+  .nav-dropdown-menu{display:none!important;}
+  #hero{grid-template-columns:1fr;}
+  .hero-right{height:60vw;min-height:280px;}
+  .hero-left{padding:100px 24px 60px;}
+  .hero-counter{right:24px;}
+  .vision-block{padding:60px 24px;}
+  #about{grid-template-columns:1fr;}
+  .about-left,.about-right{padding:72px 24px;}
+  #services{padding:60px 24px !important;}
+  .services-packs-grid{grid-template-columns:1fr !important;}
+  .svc-pack{border-right:none !important;border-bottom:1px solid rgba(255,255,255,.08);padding:28px 20px;}
+  .svc-pack:last-child{border-bottom:none;}
+  .ref-logo-grid{grid-template-columns:repeat(4,1fr) !important;}
+  .services-header{flex-direction:column;align-items:flex-start;gap:24px;margin-bottom:48px;}
+  .packs-grid { grid-template-columns: 1fr; gap:16px; }
+  .pack-card { padding:32px 24px; }
+  #brands{padding:60px 24px;}
+  .brands-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:40px;}
+  .brands-grid{grid-template-columns:repeat(2,1fr);}
+  .brand-cell{min-height:120px;}
+  .brand-cell-name{font-size:15px;}
+  #portfolio-preview{padding:60px 24px;}
+  .portfolio-preview-grid{grid-template-columns:repeat(2,1fr);}
+  #contact{grid-template-columns:1fr;}
+  .contact-left,.contact-right{padding:72px 24px;}
+  .form-row{grid-template-columns:1fr;}
+  footer{padding:40px 24px 32px;}
+  .footer-top{flex-direction:column;align-items:flex-start;gap:28px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:12px;}
+  .footer-nav{flex-wrap:wrap;gap:20px;}
+}
+@media (max-width:480px) {
+  .packs-grid { grid-template-columns: 1fr; }
+  .brands-grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-preview-grid { grid-template-columns: 1fr 1fr; }
+}
+/* PORTFOLIO */
+#portfolio { background:var(--black); padding:120px 0 0; }
+.portfolio-header { padding:0 56px 80px; display:flex; align-items:flex-end; justify-content:space-between; }
+.portfolio-title { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,96px); font-weight:900; color:var(--cream); line-height:.95; letter-spacing:-2px; }
+.portfolio-title em { font-style:italic; color:var(--orange); }
+.portfolio-count { font-family:'Playfair Display',serif; font-size:80px; font-weight:900; color:var(--orange); opacity:.15; line-height:1; }
+.portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.04); }
+.portfolio-item { position:relative; overflow:hidden; cursor:pointer; aspect-ratio:4/5; display:flex; flex-direction:column; justify-content:flex-end; }
+.portfolio-item.featured { grid-column:span 2; aspect-ratio:8/5; }
+.p-bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .7s cubic-bezier(.16,1,.3,1); transform:scale(1.04); }
+.portfolio-item:hover .p-bg { transform:scale(1.0); }
+.p-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 55%,rgba(0,0,0,.08) 100%); transition:background .4s; }
+.portfolio-item:hover .p-overlay { background:linear-gradient(to top,rgba(232,93,30,.8) 0%,rgba(0,0,0,.55) 60%,rgba(0,0,0,.1) 100%); }
+.portfolio-item::before { content:''; position:absolute; top:0; left:0; width:0; height:3px; background:var(--orange); transition:width .6s cubic-bezier(.16,1,.3,1); z-index:3; }
+.portfolio-item:hover::before { width:100%; }
+.p-num-wrap { position:absolute; top:28px; left:32px; z-index:2; }
+.p-num { font-size:11px; color:rgba(255,255,255,.35); letter-spacing:2px; font-weight:400; }
+.p-inner { position:relative; z-index:2; padding:28px 32px; }
+.p-category { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.5); font-weight:400; margin-bottom:6px; }
+.p-name { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--cream); line-height:1.1; margin-bottom:8px; }
+.portfolio-item.featured .p-name { font-size:38px; }
+.p-tag { font-size:10px; color:rgba(255,255,255,.35); letter-spacing:1px; }
+.p-arrow { position:absolute; bottom:28px; right:28px; width:40px; height:40px; border:1px solid rgba(255,255,255,.2); border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; transform:translateX(-10px); transition:all .4s; z-index:2; }
+.portfolio-item:hover .p-arrow { opacity:1; transform:translateX(0); border-color:white; }
+.p-slider-dot-wrap { position:absolute; bottom:28px; left:32px; display:flex; gap:6px; z-index:3; }
+.p-slider-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.3); border:none; cursor:pointer; padding:0; transition:background .3s,transform .3s; }
+.p-slider-dot.active { background:var(--orange); transform:scale(1.4); }
+
+.pf-video-item { position:relative; overflow:hidden; cursor:pointer; aspect-ratio:4/5; display:flex; flex-direction:column; justify-content:flex-end; }
+.pf-video-item.featured { aspect-ratio:8/5; }
+
+/* PORTFOLIO HOVER CONTROLS */
+.p-hover-controls { position:absolute; inset:0; z-index:4; pointer-events:none; opacity:0; transition:opacity .35s cubic-bezier(.16,1,.3,1); }
+.portfolio-item:hover .p-hover-controls { opacity:1; }
+
+.p-ctrl-next {
+  position:absolute; right:0; top:0; bottom:0; width:22%;
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:all; cursor:pointer; border:none; background:none; padding:0;
+  background:linear-gradient(to right, transparent 0%, rgba(0,0,0,.25) 100%);
+  transition:background .3s;
+}
+.p-ctrl-next:hover { background:linear-gradient(to right, transparent 0%, rgba(0,0,0,.4) 100%); }
+.p-ctrl-next-icon {
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(245,240,232,.12); border:1px solid rgba(245,240,232,.25);
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  transition:all .25s; transform:translateX(4px);
+}
+.p-ctrl-next:hover .p-ctrl-next-icon {
+  background:rgba(232,93,30,.65); border-color:rgba(232,93,30,.8);
+  transform:translateX(0); box-shadow:0 2px 16px rgba(232,93,30,.3);
+}
+.p-ctrl-next-icon svg { width:14px; height:14px; }
+
+.p-ctrl-prev {
+  position:absolute; left:0; top:0; bottom:0; width:22%;
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:all; cursor:pointer; border:none; background:none; padding:0;
+  background:linear-gradient(to left, transparent 0%, rgba(0,0,0,.25) 100%);
+  transition:background .3s;
+}
+.p-ctrl-prev:hover { background:linear-gradient(to left, transparent 0%, rgba(0,0,0,.4) 100%); }
+.p-ctrl-prev-icon {
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(245,240,232,.12); border:1px solid rgba(245,240,232,.25);
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  transition:all .25s; transform:translateX(-4px);
+}
+.p-ctrl-prev:hover .p-ctrl-prev-icon {
+  background:rgba(232,93,30,.65); border-color:rgba(232,93,30,.8);
+  transform:translateX(0); box-shadow:0 2px 16px rgba(232,93,30,.3);
+}
+.p-ctrl-prev-icon svg { width:14px; height:14px; }
+
+.p-ctrl-zoom {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.85);
+  width:48px; height:48px; border-radius:50%;
+  background:rgba(245,240,232,.12); border:1px solid rgba(245,240,232,.25);
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:all; cursor:pointer; padding:0;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.p-ctrl-zoom:hover {
+  background:rgba(232,93,30,.7); border-color:rgba(232,93,30,.9);
+  transform:translate(-50%,-50%) scale(1);
+  box-shadow:0 4px 24px rgba(232,93,30,.35);
+}
+.p-ctrl-zoom svg { width:18px; height:18px; }
+
+/* Hide prev/next on items with single or no slides */
+.portfolio-item:not([data-multi-slide]) .p-ctrl-next,
+/* LIGHTBOX */
+.lb-overlay {
+  position:fixed; inset:0; z-index:9000;
+  background:rgba(0,0,0,0);
+  backdrop-filter:blur(0px) brightness(1);
+  -webkit-backdrop-filter:blur(0px) brightness(1);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:opacity .35s cubic-bezier(.16,1,.3,1), backdrop-filter .35s, background .35s;
+}
+.lb-overlay.open {
+  opacity:1; pointer-events:all;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(12px) brightness(.55);
+  -webkit-backdrop-filter:blur(12px) brightness(.55);
+}
+.lb-box {
+  position:relative;
+  max-width:88vw; max-height:88vh;
+  border-radius:4px; overflow:hidden;
+  box-shadow:0 32px 96px rgba(0,0,0,.7);
+  transform:scale(.9) translateY(24px);
+  transition:transform .4s cubic-bezier(.16,1,.3,1);
+  background:#111;
+  display:flex; align-items:center; justify-content:center;
+}
+.lb-overlay.open .lb-box {
+  transform:scale(1) translateY(0);
+}
+.lb-box img {
+  display:block; max-width:88vw; max-height:88vh;
+  width:auto; height:auto; object-fit:contain;
+}
+.lb-box video {
+  display:block; max-width:88vw; max-height:88vh;
+  width:auto; height:auto; object-fit:contain;
+}
+.lb-close {
+  position:fixed; top:28px; right:32px;
+  width:44px; height:44px; border-radius:50%;
+  background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.2);
+  color:rgba(245,240,232,.8); font-size:18px; line-height:1;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  z-index:9001; transition:background .2s, transform .2s;
+  opacity:0; transform:scale(.8);
+  transition:opacity .3s .1s, transform .3s .1s, background .2s;
+}
+.lb-overlay.open .lb-close { opacity:1; transform:scale(1); }
+.lb-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
+.lb-info {
+  position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(12px);
+  background:rgba(0,0,0,.6); backdrop-filter:blur(8px);
+  padding:10px 24px; border-radius:100px;
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(245,240,232,.6); white-space:nowrap;
+  opacity:0; transition:opacity .3s .15s, transform .3s .15s;
+  z-index:9001;
+}
+.lb-overlay.open .lb-info { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* Lightbox Gallery Nav Arrows */
+.lb-nav {
+  position:fixed; top:50%; z-index:9002;
+  width:48px; height:48px; border-radius:50%;
+  background:rgba(245,240,232,.08); border:1px solid rgba(245,240,232,.15);
+  color:rgba(245,240,232,.7); font-size:20px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  transition:all .25s; transform:translateY(-50%);
+  opacity:0; pointer-events:none;
+}
+.lb-overlay.open .lb-nav.lb-nav-visible { opacity:1; pointer-events:all; }
+.lb-nav:hover { background:var(--orange); border-color:var(--orange); color:white; }
+.lb-nav-prev { left:24px; }
+.lb-nav-next { right:24px; }
+.lb-nav svg { width:20px; height:20px; }
+.lb-counter {
+  position:fixed; top:32px; left:50%; transform:translateX(-50%);
+  font-size:11px; letter-spacing:2px; color:rgba(245,240,232,.4);
+  z-index:9001; opacity:0; transition:opacity .3s .15s;
+}
+.lb-overlay.open .lb-counter { opacity:1; }
+
+
+/* PORTFOLIO RESPONSIVE */
+@media (max-width:900px) {
+  #portfolio{padding:80px 0 0;}
+  .portfolio-header{padding:0 24px 48px;flex-direction:column;align-items:flex-start;gap:20px;}
+  .portfolio-grid{grid-template-columns:1fr 1fr;}
+  .portfolio-item.featured{grid-column:span 2; aspect-ratio:8/5;}
+  .portfolio-item.featured .p-name{font-size:28px;}
+  .p-name{font-size:22px;}
+  .p-inner{padding:20px 20px;}
+}
+@media (max-width:520px) {
+  .portfolio-grid{grid-template-columns:1fr;}
+  .portfolio-item.featured{grid-column:span 1; aspect-ratio:4/5;}
+}
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lbOverlay">
+  <div class="lb-box" id="lbBox"></div>
+  <button class="lb-close" id="lbClose" aria-label="Kapat">✕</button>
+  <button class="lb-nav lb-nav-prev" id="lbPrev" aria-label="Önceki"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg></button>
+  <button class="lb-nav lb-nav-next" id="lbNext" aria-label="Sonraki"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg></button>
+  <div class="lb-counter" id="lbCounter"></div>
+  <div class="lb-info" id="lbInfo"></div>
+</div>
+
+<div class="page-loader" id="pageLoader"><div class="loader-mark"></div></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Menüyü kapat">✕</button>
+  <a href="index.html#about" onclick="closeMobileMenu()">Hakkında</a>
+  <a href="index.html#services" onclick="closeMobileMenu()">Hizmetler</a>
+  <a href="index.html#brands" onclick="closeMobileMenu()">Markalar</a>
+  <a href="portfolio.html" onclick="closeMobileMenu()">Portföy Seçkisi</a>
+  <a href="index.html#contact" onclick="closeMobileMenu()"><em>Proje Başlat →</em></a>
+  <div class="mobile-menu-footer">Pure Pixel Studio — İstanbul</div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar" aria-label="Ana navigasyon">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">
+      <img src="https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_400/v1773089404/logo_fnadzs.png" alt="Pure Pixel Logo" class="nav-logo-img">
+      <img src="https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_400/v1773089404/TRUNCU_i40hgw.png" alt="Pure Pixel Logo 2" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">Hakkında</a></li>
+      <li><a href="index.html#services">Hizmetler</a></li>
+      <li><a href="index.html#brands">Markalar</a></li>
+      <li><a href="portfolio.html" style="color:var(--orange)">Portföy</a></li>
+      <li><a href="index.html#contact">İletişim</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="index.html#contact" class="nav-contact-btn">Proje Başlat</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menüyü aç"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="portfolio">
+  <div class="portfolio-header">
+    <h2 class="portfolio-title reveal">Portföy<br><em>Seçkisi</em></h2>
+    <div class="portfolio-count reveal">15+</div>
+  </div>
+  <div class="portfolio-grid">
+
+    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971529/17871892089289897_lwbhu2.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971532/18349792609147101_fw9mwu.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971682/18050092925427541_crlpva.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971680/17905030656325080_nkjrn0.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">01</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf & Video</p><h3 class="p-name">Taff Burger</h3><p class="p-tag">1 yıllık iş birliği</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971563/18028302827333697_qx2fi4.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971528/17847034233410422_jtsgqx.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971566/18025297616368511_sdlp8l.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971723/18090353644981921_zklj4p.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971683/17986718732760254_m89u0x.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971681/17905280157161840_lzmpaa.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">02</span></div>
+      <div class="p-inner"><p class="p-category">Kafe & Restoran • İçerik</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Üsküdar</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971587/18059341364075711_vxivsj.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971588/18043477709461190_bbdnxn.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18071227165642523_ctdkof.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18025124840361959_v2d9sq.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971531/17971721873831367_yhn1oz.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">03</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Fine Dining</p><h3 class="p-name">Rafine</h3><p class="p-tag">Yemek & Mekan Fotoğrafçılığı</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971586/18052854500247987_iyzjbg.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18306249613220593_qoknoq.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18104265577524998_mpqkfm.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971561/18075866825513973_n5lex8.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971532/18358126531080321_bls26l.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">04</span></div>
+      <div class="p-inner"><p class="p-category">Kahve • Fotoğraf & Video</p><h3 class="p-name">Kurukahveci Nuri Toplar</h3><p class="p-tag">Türk kahvesi mirası</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971679/18156117343401435_c4tzxw.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971635/17925887082158239_mc6nua.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971637/17931657789121332_fqlspv.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">05</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Kreatif Prodüksiyon</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Bee Happy Agency ile</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971637/17932565793128597_fqn1hg.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">06</span></div>
+      <div class="p-inner"><p class="p-category">Pastane • Ürün & Sosyal Medya</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971558/17928025467117652_ek6odm.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">06b</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971562/17974296032929787_plnlis.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971562/18358374121081842_c1b33s.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971563/18286846507272959_zazngk.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971585/18389097025192757_nvazrq.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">07</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Yemek Fotoğrafçılığı</p><h3 class="p-name">Florya Şazeli</h3><p class="p-tag">Özel anlar, özel lezzetler</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971560/17962455713743056_jqkzgg.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971561/18024692153378602_qrdqcw.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971528/17915834196068561_gikgjp.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971627/18043741547372046_dx5z9r.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">08</span></div>
+      <div class="p-inner"><p class="p-category">Çikolata • Ürün Çekimi</p><h3 class="p-name">Choco Zuma</h3><p class="p-tag">Unutulmaz lezzetler</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971623/18039994247308137_prnitu.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971595/18031243967422192_fkojwi.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971608/17860530333422194_spqnnh.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">09</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf</p><h3 class="p-name">Kasnak</h3><p class="p-tag">Fotoğraf Prodüksiyon</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971593/17845712190542722_ajd718.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971592/17859027054419447_jufagv.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971595/18417162247103491_fomjeu.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971623/17853867777469425_wzlixf.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971629/18049624328542792_wr7m2a.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971594/18070859966156103_dtuh0f.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971628/18084576388810291_tfxdmx.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971627/17919061524161431_fcvbif.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971594/18103458970583645_ertlm1.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">10</span></div>
+      <div class="p-inner"><p class="p-category">Restoran & Mekan</p><h3 class="p-name">Upperdeck</h3><p class="p-tag">Mekan & Yemek Fotoğrafçılığı</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971591/18036927974401607_qfqee1.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971625/17903058771226949_lumj1p.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971636/17883961701342564_rtnxhl.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971621/18070528270864338_dvmeed.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">11</span></div>
+      <div class="p-inner"><p class="p-category">Pastane • Ürün Çekimi</p><h3 class="p-name">Paye Patisserie</h3><p class="p-tag">Her tatlının hikayesi</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971639/18063196889453253_byg4yk.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971641/18047574047674413_zljefv.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">12</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • İçerik Üretimi</p><h3 class="p-name">Mendel's</h3><p class="p-tag">Mutlu anlar, lezzetli kareler</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18386291581181614_oipdk9.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">12b</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971622/18049506535982977_amonvj.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971533/18064348051903679_wr3xzj.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">13</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • İçerik Üretimi</p><h3 class="p-name">Bonkers</h3><p class="p-tag">Yaratıcı içerik prodüksiyonu</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971683/18067347143432797_g6oa5b.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">14</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf & Video</p><h3 class="p-name">Taff Burger</h3><p class="p-tag">1 yıllık iş birliği</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971621/18070528270864338_dvmeed.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971622/18049506535982977_amonvj.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971594/18070859966156103_dtuh0f.jpg"]' style="position:relative; overflow:hidden; cursor:pointer; aspect-ratio:4/5;">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971644/18100036912690625_me8cpw.mp4" type="video/mp4">
+      </video>
+      <div class="p-bg" style="z-index:1;opacity:0;transition:opacity 0.6s;"></div>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:2;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:3;"><span class="p-num">15</span></div>
+      <div class="p-inner" style="position:relative;z-index:3;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
+      <div class="p-slider-dot-wrap" style="position:absolute;bottom:28px;left:32px;z-index:3;"></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:3;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971628/18084576388810291_tfxdmx.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">16</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf</p><h3 class="p-name">Upperdeck</h3><p class="p-tag">Mekan Çekimi</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971729/18083932831879616_sbakod.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">16b</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971755/18371468440144755_d86rt5.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">16c</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kahve • Video</p><h3 class="p-name">Nuri Toplar</h3><p class="p-tag">Türk Kahvesi</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18294556426260450_i5rpsb.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">17</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Kreatif Prodüksiyon</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971733/17970686729796712_wocpqp.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">18</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Kreatif Prodüksiyon</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971755/18371468440144755_d86rt5.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">19</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kahve • Video</p><h3 class="p-name">Nuri Toplar</h3><p class="p-tag">Türk Kahvesi</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971636/18019287428613403_fotbfv.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">19b</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971642/18087202834951257_tnnjwv.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">20</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971742/18136748755465348_phh4b9.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">21</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">Mashhat</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971742/18094925807496622_uromak.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">22</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">Mashhat</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971733/17843997351649227_ezhgvw.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">23</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971729/18083932831879616_sbakod.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">24</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18386291581181614_oipdk9.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">25</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971742/18094925807496622_uromak.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">25b</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">Mashhat</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971558/17928025467117652_ek6odm.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">25c</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item featured reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18294556426260450_i5rpsb.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">26</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Kreatif Prodüksiyon</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971636/18019287428613403_fotbfv.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">27</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal pf-video-item">
+      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971733/17843997351649227_ezhgvw.mp4" type="video/mp4">
+      </video>
+      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
+      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">28</span></div>
+      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
+      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971683/18067347143432797_g6oa5b.jpg"]'>
+      <div class="p-bg"></div><div class="p-overlay"></div>
+      <div class="p-num-wrap"><span class="p-num">29</span></div>
+      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf & Video</p><h3 class="p-name">Taff Burger</h3><p class="p-tag">1 yıllık iş birliği</p></div>
+      <div class="p-slider-dot-wrap"></div>
+      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
+    </div>
+
+  </div>
+</section>
+
+<button class="back-to-top" id="backToTop" aria-label="Yukarı çık" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo-wrap">
+      <div class="footer-logo-mark"></div>
+      <div class="footer-brand">Pure Pixel<span>Studio — İstanbul</span></div>
+    </div>
+    <nav class="footer-nav">
+      <a href="index.html#about">Hakkında</a>
+      <a href="index.html#services">Hizmetler</a>
+      <a href="index.html#brands">Markalar</a>
+      <a href="portfolio.html">Portföy</a>
+      <a href="index.html#contact">İletişim</a>
+    </nav>
+    <div class="footer-socials">
+      <a href="https://instagram.com/purepixel.studio" target="_blank">Instagram</a>
+      <a href="https://tr.linkedin.com/company/purepixelstudio" target="_blank">LinkedIn</a>
+      <a href="https://www.behance.net/PurePixelStudio" target="_blank">Behance</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Pure Pixel Studio. Tüm hakları saklıdır.</p>
+    <p class="footer-tagline">Every frame tells a story.</p>
+  </div>
+</footer>
+<script>
+/* PAGE LOADER */
+window.addEventListener('load', () => {
+  document.getElementById('pageLoader').classList.add('hidden');
+});
+
+/* VIDEO LAZY LOAD */
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const video = entry.target;
+    if(entry.isIntersecting) {
+      if(video.preload === 'none') video.preload = 'metadata';
+      video.play().catch(()=>{});
+    } else {
+      video.pause();
+    }
+  });
+}, { rootMargin: '200px 0px' });
+document.querySelectorAll('.lazy-video').forEach(v => videoObserver.observe(v));
+
+/* CURSOR */
+const cursor=document.getElementById('cursor');
+const follower=document.getElementById('cursorFollower');
+let mx=0,my=0,fx=0,fy=0;
+const isTouch=window.matchMedia('(hover:none)').matches||window.innerWidth<=900;
+if(!isTouch){
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+    if(!cursor.classList.contains('active')){
+      cursor.classList.add('active');
+      follower.classList.add('active');
+    }
+  });
+  (function af(){
+    fx+=(mx-fx)*.12; fy+=(my-fy)*.12;
+    follower.style.left=fx+'px'; follower.style.top=fy+'px';
+    requestAnimationFrame(af);
+  })();
+  document.querySelectorAll('a,button,.portfolio-item,.brand-cell,.nav-contact-btn').forEach(el=>{
+    el.addEventListener('mouseenter',()=>follower.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>follower.classList.remove('hover'));
+  });
+}
+
+/* NAV */
+const navbar=document.getElementById('navbar');
+const backToTop=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{
+  backToTop.classList.toggle('visible',window.scrollY>600);
+},{passive:true});
+
+/* MOBILE MENU */
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+document.getElementById('mobileMenuClose').addEventListener('click',closeMobileMenu);
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+function closeMobileMenu(){
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* REVEAL */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+/* PORTFOLIO SLIDERS */
+document.querySelectorAll('.portfolio-item[data-slides]').forEach(card=>{
+  const slides=JSON.parse(card.getAttribute('data-slides'));
+  if(!slides.length) return;
+  const bg=card.querySelector('.p-bg');
+  const dotWrap=card.querySelector('.p-slider-dot-wrap');
+  let idx=0;
+  bg.style.backgroundImage=`url('${slides[0]}')`;
+  if(slides.length>1){
+    slides.forEach((_,i)=>{
+      const d=document.createElement('button');
+      d.className='p-slider-dot'+(i===0?' active':'');
+      d.setAttribute('aria-label',`Slide ${i+1}`);
+      d.addEventListener('click',ev=>{ev.stopPropagation();goTo(i);});
+      dotWrap.appendChild(d);
+    });
+    const dots=dotWrap.querySelectorAll('.p-slider-dot');
+    function goTo(i){
+      idx=i;
+      bg.style.backgroundImage=`url('${slides[idx]}')`;
+      dots.forEach((d,j)=>d.classList.toggle('active',j===idx));
+    }
+    /* Auto-timer is now handled by hover controls below */
+  }
+});
+
+/* VIDEO PORTFOLIO ITEM - hover'da video durur, foto slider devreye girer */
+document.querySelectorAll('.portfolio-item[data-slides] .portfolio-video-bg').forEach(video=>{
+  const card = video.closest('.portfolio-item');
+  const bg = card.querySelector('.p-bg');
+  const slides = JSON.parse(card.getAttribute('data-slides'));
+  let idx = 0, timer;
+  card.addEventListener('mouseenter', ()=>{
+    video.pause();
+    bg.style.backgroundImage = `url('${slides[0]}')`;
+    bg.style.opacity = '1';
+    timer = setInterval(()=>{ idx=(idx+1)%slides.length; bg.style.backgroundImage=`url('${slides[idx]}')`; }, 1800);
+  });
+  card.addEventListener('mouseleave', ()=>{
+    clearInterval(timer);
+    bg.style.opacity = '0';
+    idx = 0;
+    video.play();
+  });
+});
+
+/* PORTFOLIO HOVER CONTROLS — inject prev/next/zoom buttons */
+(function(){
+  const chevronRight = '<svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg>';
+  const chevronLeft = '<svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg>';
+  const zoomIcon = '<svg viewBox="0 0 20 20" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M14 14l4 4"/><path d="M6.5 8.5h4M8.5 6.5v4"/></svg>';
+  document.querySelectorAll('.portfolio-item').forEach(card => {
+    const slides = card.getAttribute('data-slides');
+    let slideArr = [];
+    let hasMultiSlides = false;
+    if(slides) {
+      try { slideArr = JSON.parse(slides); } catch(e){}
+      hasMultiSlides = slideArr.length > 1;
+    }
+
+    // Mark cards with multiple slides
+    if(hasMultiSlides) card.setAttribute('data-multi-slide','');
+
+    // Create controls wrapper
+    const ctrl = document.createElement('div');
+    ctrl.className = 'p-hover-controls';
+
+    // Prev button
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'p-ctrl-prev';
+    prevBtn.innerHTML = '<span class="p-ctrl-prev-icon">' + chevronLeft + '</span>';
+    prevBtn.setAttribute('aria-label','Önceki fotoğraf');
+    ctrl.appendChild(prevBtn);
+
+    // Zoom button (center)
+    const zoomBtn = document.createElement('button');
+    zoomBtn.className = 'p-ctrl-zoom';
+    zoomBtn.innerHTML = zoomIcon;
+    zoomBtn.setAttribute('aria-label','Büyüt');
+    ctrl.appendChild(zoomBtn);
+
+    // Next button
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'p-ctrl-next';
+    nextBtn.innerHTML = '<span class="p-ctrl-next-icon">' + chevronRight + '</span>';
+    nextBtn.setAttribute('aria-label','Sonraki fotoğraf');
+    ctrl.appendChild(nextBtn);
+
+    card.appendChild(ctrl);
+
+    // Wire up next/prev for multi-slide items
+    if(hasMultiSlides) {
+      const bg = card.querySelector('.p-bg');
+      const dots = card.querySelectorAll('.p-slider-dot');
+      
+      // Get current index from dots
+      function getCurrentIdx() {
+        let cur = 0;
+        dots.forEach((d,j) => { if(d.classList.contains('active')) cur = j; });
+        return cur;
+      }
+      function goToSlide(i) {
+        bg.style.backgroundImage = "url('" + slideArr[i] + "')";
+        dots.forEach((d,j) => d.classList.toggle('active', j === i));
+      }
+
+      // Store ref to auto-timer so we can reset it
+      let autoTimer = null;
+      function resetAutoTimer() {
+        if(autoTimer) clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+          const cur = getCurrentIdx();
+          goToSlide((cur + 1) % slideArr.length);
+        }, 1800);
+      }
+      card.addEventListener('mouseenter', () => { resetAutoTimer(); });
+      card.addEventListener('mouseleave', () => { if(autoTimer) clearInterval(autoTimer); autoTimer = null; });
+
+      nextBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const cur = getCurrentIdx();
+        goToSlide((cur + 1) % slideArr.length);
+        resetAutoTimer();
+      });
+      prevBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const cur = getCurrentIdx();
+        goToSlide((cur - 1 + slideArr.length) % slideArr.length);
+        resetAutoTimer();
+      });
+    }
+
+    // Wire up zoom — triggers the lightbox
+    zoomBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const nameEl = card.querySelector('.p-name');
+      const catEl = card.querySelector('.p-category');
+      const label = (nameEl ? nameEl.textContent : '') + (catEl ? ' • ' + catEl.textContent : '');
+
+      // Video item?
+      const videoEl = card.querySelector('.portfolio-video-bg');
+      if (videoEl && !card.getAttribute('data-slides')) {
+        const src = videoEl.querySelector('source')?.src || videoEl.src;
+        document.querySelector('.lb-overlay').__openLightbox(src, 'video', label);
+        return;
+      }
+
+      // Photo item — get current slide
+      const bg = card.querySelector('.p-bg');
+      if (bg) {
+        const bgImg = bg.style.backgroundImage;
+        const match = bgImg.match(/url\(['"]?([^'"]+)['"]?\)/);
+        if (match) {
+          document.querySelector('.lb-overlay').__openLightbox(match[1], 'image', label);
+          return;
+        }
+      }
+
+      // Fallback for video items
+      if (videoEl) {
+        const src = videoEl.querySelector('source')?.src || videoEl.src;
+        document.querySelector('.lb-overlay').__openLightbox(src, 'video', label);
+      }
+    });
+  });
+})();
+
+/* FORM */
+function toggleOption(el){el.classList.toggle('active');}
+function handleSubmit(e){
+  e.preventDefault();
+  const secili = [...document.querySelectorAll('.form-option.active')].map(o=>o.textContent).join(', ');
+  document.getElementById('hizmetlerInput').value = secili || 'Belirtilmedi';
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Gönderiliyor...';
+  btn.disabled = true;
+
+  fetch(e.target.action, {
+    method: 'POST',
+    body: new FormData(e.target),
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    if(res.ok){
+      btn.textContent = '✓ Mesajınız İletildi!';
+      btn.style.background = '#2d7a2d';
+      e.target.reset();
+      document.querySelectorAll('.form-option.active').forEach(o=>o.classList.remove('active'));
+      setTimeout(()=>{ btn.textContent='Mesaj Gönder →'; btn.style.background=''; btn.disabled=false; }, 4000);
+    } else {
+      btn.textContent = '✗ Hata';
+      btn.style.background = '#c0392b';
+      btn.disabled = false;
+      setTimeout(()=>{ btn.textContent='Mesaj Gönder →'; btn.style.background=''; }, 3000);
+    }
+  }).catch(()=>{
+    btn.textContent = '✗ Hata';
+    btn.style.background = '#c0392b';
+    btn.disabled = false;
+    setTimeout(()=>{ btn.textContent='Mesaj Gönder →'; btn.style.background=''; }, 3000);
+  });
+/* LIGHTBOX WITH BRAND GALLERY NAVIGATION */
+(function(){
+  const overlay = document.getElementById('lbOverlay');
+  const box     = document.getElementById('lbBox');
+  const closeBtn= document.getElementById('lbClose');
+  const info    = document.getElementById('lbInfo');
+  const prevBtn = document.getElementById('lbPrev');
+  const nextBtn = document.getElementById('lbNext');
+  const counter = document.getElementById('lbCounter');
+  let isOpen = false;
+
+  // Build brand galleries: group all media (images+videos) by brand name
+  const brandGalleries = {};
+  document.querySelectorAll('.portfolio-item').forEach(card => {
+    const nameEl = card.querySelector('.p-name');
+    if(!nameEl) return;
+    const brand = nameEl.textContent.trim();
+    if(!brandGalleries[brand]) brandGalleries[brand] = [];
+
+    // Collect all slides from data-slides
+    const slidesAttr = card.getAttribute('data-slides');
+    if(slidesAttr) {
+      try {
+        const slides = JSON.parse(slidesAttr);
+        slides.forEach(s => {
+          if(!brandGalleries[brand].find(m => m.src === s)) {
+            brandGalleries[brand].push({ src: s, type: 'image' });
+          }
+        });
+      } catch(e){}
+    }
+
+    // Collect video sources
+    const videoEl = card.querySelector('.portfolio-video-bg');
+    if(videoEl) {
+      const src = videoEl.querySelector('source')?.src || videoEl.src;
+      if(src && !brandGalleries[brand].find(m => m.src === src)) {
+        brandGalleries[brand].push({ src: src, type: 'video' });
+      }
+    }
+  });
+
+  let currentGallery = [];
+  let currentIdx = 0;
+  let currentBrand = '';
+
+  function showMedia(idx) {
+    currentIdx = idx;
+    const media = currentGallery[idx];
+    box.innerHTML = '';
+
+    if(media.type === 'video') {
+      const v = document.createElement('video');
+      v.src = media.src; v.autoplay = true; v.muted = true; v.loop = true; v.playsinline = true;
+      v.style.cssText = 'display:block;max-width:88vw;max-height:88vh;width:auto;height:auto;object-fit:contain;';
+      box.appendChild(v);
+    } else {
+      const img = document.createElement('img');
+      img.src = media.src;
+      img.style.cssText = 'display:block;max-width:88vw;max-height:88vh;width:auto;height:auto;object-fit:contain;';
+      box.appendChild(img);
+    }
+
+    // Update counter
+    counter.textContent = (idx + 1) + ' / ' + currentGallery.length;
+
+    // Show/hide nav arrows
+    if(currentGallery.length > 1) {
+      prevBtn.classList.add('lb-nav-visible');
+      nextBtn.classList.add('lb-nav-visible');
+    } else {
+      prevBtn.classList.remove('lb-nav-visible');
+      nextBtn.classList.remove('lb-nav-visible');
+    }
+  }
+
+  function openLightbox(src, type, label) {
+    // Find brand from label (format: "BrandName • Category")
+    const brandName = label ? label.split(' • ')[0].trim() : '';
+    currentBrand = brandName;
+    currentGallery = brandGalleries[brandName] || [{ src, type }];
+    
+    // Find the index of the current src in gallery
+    currentIdx = currentGallery.findIndex(m => m.src === src);
+    if(currentIdx < 0) currentIdx = 0;
+
+    info.textContent = label || '';
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    isOpen = true;
+
+    showMedia(currentIdx);
+  }
+
+  // Expose for hover controls
+  overlay.__openLightbox = openLightbox;
+
+  function closeLightbox() {
+    overlay.classList.remove('open');
+    prevBtn.classList.remove('lb-nav-visible');
+    nextBtn.classList.remove('lb-nav-visible');
+    document.body.style.overflow = '';
+    isOpen = false;
+    setTimeout(() => { box.innerHTML = ''; }, 400);
+  }
+
+  function goNext() {
+    if(currentGallery.length <= 1) return;
+    showMedia((currentIdx + 1) % currentGallery.length);
+  }
+  function goPrev() {
+    if(currentGallery.length <= 1) return;
+    showMedia((currentIdx - 1 + currentGallery.length) % currentGallery.length);
+  }
+
+  nextBtn.addEventListener('click', e => { e.stopPropagation(); goNext(); });
+  prevBtn.addEventListener('click', e => { e.stopPropagation(); goPrev(); });
+  closeBtn.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if(!isOpen) return;
+    if(e.key === 'Escape' || e.key === 'Backspace') closeLightbox();
+    if(e.key === 'ArrowRight') goNext();
+    if(e.key === 'ArrowLeft') goPrev();
+  });
+
+  // Attach to portfolio items
+  document.querySelectorAll('.portfolio-item').forEach(card => {
+    card.addEventListener('click', e => {
+      // Don't open if clicking a dot button or nav controls (prev/next)
+      if (e.target.closest('.p-slider-dot')) return;
+      if (e.target.closest('.p-ctrl-next')) return;
+      if (e.target.closest('.p-ctrl-prev')) return;
+
+      // Get label
+      const nameEl = card.querySelector('.p-name');
+      const catEl  = card.querySelector('.p-category');
+      const label  = (nameEl ? nameEl.textContent : '') + (catEl ? ' • ' + catEl.textContent : '');
+
+      // Video item?
+      const videoEl = card.querySelector('.portfolio-video-bg');
+      if (videoEl) {
+        const src = videoEl.querySelector('source')?.src || videoEl.src;
+        openLightbox(src, 'video', label);
+        return;
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

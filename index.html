@@ -14,15 +14,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://res.cloudinary.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Syne:wght@400;500;700;800&family=Black+Han+Sans&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
-@font-face {
-  font-family: 'Akira';
-  src: url('https://cdn.jsdelivr.net/gh/webfonts-cdn/akira@main/Akira-Expanded.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --cream: #f5f0e8;
@@ -43,50 +36,49 @@ body { font-family: 'Syne', sans-serif; background: var(--cream); color: var(--b
 .cursor-follower.hover { width: 56px; height: 56px; background: rgba(232, 93, 30, 0.1); border-color: var(--orange); }
 @media (hover:none),(max-width:900px) { body{cursor:auto;} .cursor,.cursor-follower{display:none!important;} }
 
-/* NAV - DİNAMİK YAPI */
-nav { 
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
-    display: flex; align-items: center; justify-content: space-between; 
-    padding: 30px 56px; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); 
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 56px; background: var(--cream); border-bottom: 1px solid rgba(0,0,0,0.05);
 }
-
-/* Scroll ile Gelen Krem Bar */
-nav.solid { 
-    background: var(--cream); 
-    padding: 8px 56px; 
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
 .nav-left { display: flex; align-items: center; gap: 50px; }
-
-/* Logo Güncellemesi */
 .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-logo-mark { width: 28px; height: 28px; background: var(--black); position: relative; flex-shrink: 0; }
-.nav-logo-mark::after { content:''; position: absolute; width: 10px; height: 10px; background: var(--orange); top: 5px; right: 5px; }
-
-/* Cloudinary Logo - Büyütüldü ve Hizalandı */
-.nav-logo-img { 
-    height: 168px; 
-    width: auto; 
-    display: block;
-    transition: filter 0.4s ease, height 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    filter: brightness(0) invert(1);
+.nav-logo-img {
+  height: 118px; width: auto; display: block;
 }
-nav.solid .nav-logo-img { filter: none; height: 118px; }
-
-/* Site Haritası - Sadece Scroll ile Gelir */
-.nav-links { display: flex; list-style: none; gap: 30px; opacity: 0; visibility: hidden; transition: all 0.4s; transform: translateX(-20px); }
-nav.solid .nav-links { opacity: 1; visibility: visible; transform: translateX(0); }
-.nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; color: var(--black); }
+.nav-links { display: flex; list-style: none; gap: 30px; }
+.nav-links a { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; color: var(--black); transition: color .2s; }
 .nav-links a:hover { color: var(--orange); }
-
-/* Proje Başlat Butonu - Sadece Scroll ile Gelir */
-.nav-contact-btn { 
-    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; 
-    color: var(--black); border: 1px solid var(--black); padding: 10px 22px; 
-    opacity: 0; visibility: hidden; transition: all 0.3s; 
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-contact-btn {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+  background: var(--black); color: white; border: 1px solid var(--black); padding: 10px 22px; transition: all 0.3s;
 }
-nav.solid .nav-contact-btn { opacity: 1; visibility: visible; background: var(--black); color: white; }
+.nav-contact-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
+
+/* NAV DROPDOWN FOR BRANDS */
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { cursor: pointer; }
+.nav-dropdown-menu {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  min-width: 220px; background: white; border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 12px 40px rgba(0,0,0,.1); padding: 12px 0;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .25s, visibility .25s, transform .25s;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 100;
+}
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1; visibility: visible; pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a {
+  display: block; padding: 8px 20px; font-size: 12px !important; font-weight: 600 !important;
+  letter-spacing: 0.5px !important; text-transform: none !important;
+  color: var(--black) !important; transition: all .2s;
+}
+.nav-dropdown-menu a:hover { background: rgba(232,93,30,.06); color: var(--orange) !important; padding-left: 24px; }
 
 /* HAMBURGER */
 .nav-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; z-index:200; }
@@ -96,13 +88,22 @@ nav.solid .nav-contact-btn { opacity: 1; visibility: visible; background: var(--
 .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* MOBILE MENU */
-.mobile-menu { display:none; position:fixed; inset:0; z-index:150; background:var(--black); flex-direction:column; align-items:center; justify-content:center; gap:40px; }
+.mobile-menu { display:none; position:fixed; inset:0; z-index:150; background:var(--black); flex-direction:column; align-items:center; justify-content:flex-start; padding-top:100px; gap:0; overflow-y:auto; }
 .mobile-menu.open { display:flex; }
-.mobile-menu a { font-family:'Playfair Display',serif; font-size:40px; font-weight:900; color:var(--cream); text-decoration:none; letter-spacing:-1px; transition:color .2s; }
+.mobile-menu a { font-family:'Playfair Display',serif; font-size:32px; font-weight:900; color:var(--cream); text-decoration:none; letter-spacing:-1px; transition:color .2s; padding:16px 0; }
 .mobile-menu a:hover { color:var(--orange); }
 .mobile-menu a em { font-style:italic; color:var(--orange); }
 .mobile-menu-close { position:absolute; top:24px; right:24px; background:none; border:none; color:var(--cream); font-size:32px; cursor:pointer; line-height:1; }
 .mobile-menu-footer { position:absolute; bottom:40px; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.25); }
+
+/* MOBILE BRANDS ACCORDION */
+.mobile-brands-toggle { background:none; border:none; color:var(--cream); font-family:'Playfair Display',serif; font-size:32px; font-weight:900; cursor:pointer; padding:16px 0; display:flex; align-items:center; gap:12px; }
+.mobile-brands-toggle svg { width:18px; height:18px; transition:transform .3s; }
+.mobile-brands-toggle.open svg { transform:rotate(180deg); }
+.mobile-brands-list { display:none; flex-direction:column; gap:0; padding:0 0 16px; width:100%; max-width:320px; }
+.mobile-brands-list.open { display:flex; }
+.mobile-brands-list a { font-family:'Syne',sans-serif !important; font-size:15px !important; font-weight:600 !important; color:rgba(245,240,232,.6) !important; padding:10px 24px !important; letter-spacing:0 !important; border-left:2px solid rgba(255,255,255,.08); }
+.mobile-brands-list a:hover { color:var(--orange) !important; border-left-color:var(--orange); }
 
 /* HERO */
 #hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; position:relative; overflow:hidden; }
@@ -113,20 +114,17 @@ nav.solid .nav-contact-btn { opacity: 1; visibility: visible; background: var(--
 .hero-title em { font-style:italic; color:var(--orange); }
 .hero-desc { font-size:14px; line-height:1.8; color:rgba(245,240,232,.5); max-width:380px; margin-bottom:56px; font-weight:400; opacity:0; animation:slideRight .9s .8s cubic-bezier(.16,1,.3,1) forwards; position:relative; z-index:1; }
 .hero-cta { display:flex; align-items:center; gap:32px; opacity:0; animation:slideRight .9s 1s cubic-bezier(.16,1,.3,1) forwards; position:relative; z-index:1; }
-.btn-main { background:var(--orange); color:white; border:none; padding:18px 44px; font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:background .2s,transform .2s; }
+.btn-main { background:var(--orange); color:white; border:none; padding:18px 44px; font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:background .2s,transform .2s; text-decoration:none; display:inline-block; }
 .btn-main:hover { background:#d44d0e; transform:translateY(-2px); }
 .hero-scroll-text { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.3); }
 .hero-counter { position:absolute; bottom:48px; right:56px; text-align:right; color:rgba(245,240,232,.2); font-size:10px; letter-spacing:2px; z-index:1; }
 .hero-counter strong { display:block; font-family:'Playfair Display',serif; font-size:48px; font-weight:900; color:rgba(245,240,232,.08); line-height:1; }
-
-/* ROTATING MARKS */
 .hero-marks { position: absolute; top: 50%; right: -60px; transform: translateY(-60%); pointer-events: none; z-index: 0; opacity: 0; animation: fadeIn 1.2s 1.2s forwards; }
 .big-mark { width: 220px; height: 220px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); position: relative; animation: rotateMark 18s linear infinite; }
 .big-mark::after { content: ''; position: absolute; width: 88px; height: 88px; background: var(--orange); opacity: 0.18; top: 40px; right: 40px; animation: rotateMark 18s linear infinite reverse; }
 .small-mark { width: 100px; height: 100px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); position: absolute; bottom: -40px; left: -40px; animation: rotateMark 12s linear infinite; }
 .small-mark::after { content: ''; position: absolute; width: 40px; height: 40px; background: var(--orange); opacity: 0.12; top: 18px; right: 18px; animation: rotateMark 12s linear infinite reverse; }
 @keyframes rotateMark { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
-
 .hero-right { position:relative; overflow:hidden; }
 .hero-slider { position:absolute; inset:0; }
 .hero-slider-img { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1.4s ease; }
@@ -144,12 +142,34 @@ nav.solid .nav-contact-btn { opacity: 1; visibility: visible; background: var(--
 .marquee-track span.dot { color:rgba(255,255,255,.4); padding:0 6px; }
 @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
+/* VISION SECTION */
+#vision { padding: 0; }
+.vision-block { padding: 100px 56px; }
+.vision-block-1 { background: var(--cream); }
+.vision-block-2 { background: var(--orange); }
+.vision-block-3 { background: var(--dark-gray); }
+.vision-text {
+  max-width: 800px; margin: 0 auto;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 2.2vw, 26px);
+  line-height: 1.7; font-weight: 400;
+}
+.vision-block-1 .vision-text { color: var(--black); }
+.vision-block-2 .vision-text { color: white; }
+.vision-block-3 .vision-text { color: rgba(245,240,232,.85); }
+.vision-text .highlight {
+  background: var(--orange); color: white; padding: 2px 6px; font-weight: 700;
+  display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.vision-block-2 .vision-text .highlight { background: white; color: var(--orange); }
+.vision-block-3 .vision-text .highlight { background: var(--orange); color: white; }
+
 /* ABOUT */
+.section-tag { font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--orange); margin-bottom:32px; display:flex; align-items:center; gap:12px; }
+.section-tag::before { content:''; width:32px; height:1px; background:var(--orange); }
 #about { display:grid; grid-template-columns:1fr 1fr; min-height:90vh; }
 .about-left { background:var(--black); padding:120px 56px; display:flex; flex-direction:column; justify-content:space-between; }
 .about-right { padding:120px 56px; display:flex; flex-direction:column; justify-content:center; background:var(--cream); }
-.section-tag { font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--orange); margin-bottom:32px; display:flex; align-items:center; gap:12px; }
-.section-tag::before { content:''; width:32px; height:1px; background:var(--orange); }
 .about-headline { font-family:'Playfair Display',serif; font-size:clamp(36px,3.5vw,60px); font-weight:900; line-height:1.1; color:var(--cream); margin-bottom:40px; }
 .about-headline em { font-style:italic; color:var(--orange); }
 .about-body { font-size:14px; line-height:1.9; color:rgba(245,240,232,.55); font-weight:400; }
@@ -165,124 +185,83 @@ nav.solid .nav-contact-btn { opacity: 1; visibility: visible; background: var(--
 .value-name { font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; flex:1; }
 .value-arrow { color:var(--text-muted); font-size:18px; }
 
-/* SERVICES */
+/* SERVICES / PRICING */
 #services { background:var(--cream); padding:120px 56px; }
 .services-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:80px; }
 .services-title { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,96px); font-weight:900; line-height:.95; letter-spacing:-2px; }
 .services-title em { font-style:italic; color:var(--orange); }
-.services-intro { max-width:280px; font-size:13px; line-height:1.8; color:var(--text-muted); font-weight:400; padding-bottom:8px; }
-.service-row { display:grid; grid-template-columns:80px 1fr 1fr auto; align-items:center; gap:40px; padding:40px 0; border-top:1px solid rgba(0,0,0,.1); cursor:pointer; transition:all .3s; position:relative; overflow:hidden; }
-.service-row::before { content:''; position:absolute; left:-100%; top:0; bottom:0; width:100%; background:var(--black); transition:left .4s cubic-bezier(.16,1,.3,1); z-index:0; }
-.service-row:hover::before { left:0; }
-.service-row > * { position:relative; z-index:1; }
-.service-row:hover .service-n,.service-row:hover .service-name,.service-row:hover .service-desc { color:var(--cream); }
-.service-row:hover .service-tag { background:rgba(255,255,255,.1); color:var(--cream); }
-.service-row:last-child { border-bottom:1px solid rgba(0,0,0,.1); }
-.service-n { font-family:'Playfair Display',serif; font-size:14px; font-style:italic; color:var(--orange); transition:color .3s; }
-.service-name { font-size:22px; font-weight:700; letter-spacing:-.5px; transition:color .3s; }
-.service-desc { font-size:13px; color:var(--text-muted); line-height:1.6; font-weight:400; transition:color .3s; }
-.service-tag { background:rgba(0,0,0,.06); padding:8px 20px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; transition:all .3s; white-space:nowrap; }
+.services-intro { max-width:320px; font-size:13px; line-height:1.8; color:var(--text-muted); font-weight:400; padding-bottom:8px; }
 
-/* PORTFOLIO */
-#portfolio { background:var(--black); padding:120px 0 0; }
-.portfolio-header { padding:0 56px 80px; display:flex; align-items:flex-end; justify-content:space-between; }
-.portfolio-title { font-family:'Playfair Display',serif; font-size:clamp(48px,6vw,96px); font-weight:900; color:var(--cream); line-height:.95; letter-spacing:-2px; }
-.portfolio-title em { font-style:italic; color:var(--orange); }
-.portfolio-count { font-family:'Playfair Display',serif; font-size:80px; font-weight:900; color:var(--orange); opacity:.15; line-height:1; }
-.portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.04); }
-.portfolio-item { position:relative; overflow:hidden; cursor:pointer; aspect-ratio:4/5; display:flex; flex-direction:column; justify-content:flex-end; }
-.portfolio-item.featured { grid-column:span 2; aspect-ratio:8/5; }
-.p-bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .7s cubic-bezier(.16,1,.3,1); transform:scale(1.04); }
-.portfolio-item:hover .p-bg { transform:scale(1.0); }
-.p-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.3) 55%,rgba(0,0,0,.08) 100%); transition:background .4s; }
-.portfolio-item:hover .p-overlay { background:linear-gradient(to top,rgba(232,93,30,.8) 0%,rgba(0,0,0,.55) 60%,rgba(0,0,0,.1) 100%); }
-.portfolio-item::before { content:''; position:absolute; top:0; left:0; width:0; height:3px; background:var(--orange); transition:width .6s cubic-bezier(.16,1,.3,1); z-index:3; }
-.portfolio-item:hover::before { width:100%; }
-.p-num-wrap { position:absolute; top:28px; left:32px; z-index:2; }
-.p-num { font-size:11px; color:rgba(255,255,255,.35); letter-spacing:2px; font-weight:400; }
-.p-inner { position:relative; z-index:2; padding:28px 32px; }
-.p-category { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.5); font-weight:400; margin-bottom:6px; }
-.p-name { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--cream); line-height:1.1; margin-bottom:8px; }
-.portfolio-item.featured .p-name { font-size:38px; }
-.p-tag { font-size:10px; color:rgba(255,255,255,.35); letter-spacing:1px; }
-.p-arrow { position:absolute; bottom:28px; right:28px; width:40px; height:40px; border:1px solid rgba(255,255,255,.2); border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; transform:translateX(-10px); transition:all .4s; z-index:2; }
-.portfolio-item:hover .p-arrow { opacity:1; transform:translateX(0); border-color:white; }
-.p-slider-dot-wrap { position:absolute; bottom:28px; left:32px; display:flex; gap:6px; z-index:3; }
-.p-slider-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.3); border:none; cursor:pointer; padding:0; transition:background .3s,transform .3s; }
-.p-slider-dot.active { background:var(--orange); transform:scale(1.4); }
+/* PRICING PACKS */
+.packs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 60px; }
+.pack-card {
+  background: white; border: 1px solid rgba(0,0,0,.08); padding: 40px 32px;
+  display: flex; flex-direction: column; transition: all .4s cubic-bezier(.16,1,.3,1);
+  position: relative;
+}
+.pack-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.08); }
+.pack-card.popular { border-color: var(--orange); }
+.pack-card.popular::before {
+  content:'En Popüler'; position:absolute; top:-12px; left:32px;
+  background:var(--orange); color:white; font-size:9px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase; padding:4px 14px;
+}
+.pack-name { font-family:'Playfair Display',serif; font-size:24px; font-weight:900; color:var(--orange); margin-bottom:20px; text-transform:uppercase; letter-spacing:1px; }
+.pack-desc { font-size:13px; line-height:1.7; color:var(--text-muted); margin-bottom:24px; flex-grow:0; }
+.pack-content-summary { margin-bottom:20px; }
+.pack-content-summary span { display:inline-block; font-size:12px; font-weight:700; letter-spacing:1px; color:var(--black); margin-right:16px; margin-bottom:6px; }
+.pack-toggle-btn {
+  background:none; border:1px solid rgba(0,0,0,.12); padding:12px 20px;
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer; transition:all .25s; color:var(--black);
+  display:flex; align-items:center; justify-content:space-between; width:100%; margin-bottom:20px;
+}
+.pack-toggle-btn:hover { border-color:var(--orange); color:var(--orange); }
+.pack-toggle-btn svg { width:14px; height:14px; transition:transform .3s; }
+.pack-toggle-btn.open svg { transform:rotate(180deg); }
+.pack-details { display:none; padding:0; margin-bottom:24px; }
+.pack-details.open { display:block; }
+.pack-details ul { list-style:none; padding:0; }
+.pack-details li { font-size:12px; line-height:1.6; color:#555; padding:6px 0; border-bottom:1px solid rgba(0,0,0,.04); display:flex; align-items:flex-start; gap:8px; }
+.pack-details li::before { content:'—'; color:var(--orange); font-weight:700; flex-shrink:0; }
+.pack-cta {
+  margin-top:auto; background:var(--black); color:var(--cream); border:none;
+  padding:16px 0; font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:all .25s;
+  text-align:center; text-decoration:none; display:block;
+}
+.pack-cta:hover { background:var(--orange); }
 
-.pf-video-item { position:relative; overflow:hidden; cursor:pointer; aspect-ratio:4/5; display:flex; flex-direction:column; justify-content:flex-end; }
-.pf-video-item.featured { aspect-ratio:8/5; }
+/* REFERENCES STRIP */
+.references-strip { margin-top: 80px; border-top: 1px solid rgba(0,0,0,.08); padding-top: 40px; }
+.references-strip-label { font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--text-muted); margin-bottom:24px; display:flex; align-items:center; gap:12px; }
+.references-strip-label::before { content:''; width:32px; height:1px; background:var(--text-muted); }
+.ref-logos { display:flex; flex-wrap:wrap; gap:20px; align-items:center; }
+.ref-logo-item {
+  height:48px; width:auto; filter:grayscale(1) opacity(.45);
+  transition:filter .3s; cursor:pointer;
+}
+.ref-logo-item:hover { filter:grayscale(0) opacity(1); }
 
-/* PORTFOLIO HOVER CONTROLS */
-.p-hover-controls { position:absolute; inset:0; z-index:4; pointer-events:none; opacity:0; transition:opacity .35s cubic-bezier(.16,1,.3,1); }
-.portfolio-item:hover .p-hover-controls { opacity:1; }
-
-.p-ctrl-next {
-  position:absolute; right:0; top:0; bottom:0; width:22%;
-  display:flex; align-items:center; justify-content:center;
-  pointer-events:all; cursor:pointer; border:none; background:none; padding:0;
-  background:linear-gradient(to right, transparent 0%, rgba(0,0,0,.25) 100%);
-  transition:background .3s;
+/* PORTFOLIO PREVIEW CTA */
+#portfolio-preview { background:var(--black); padding:100px 56px; text-align:center; }
+.portfolio-preview-title { font-family:'Playfair Display',serif; font-size:clamp(36px,4vw,64px); font-weight:900; color:var(--cream); line-height:1.05; margin-bottom:20px; }
+.portfolio-preview-title em { font-style:italic; color:var(--orange); }
+.portfolio-preview-desc { font-size:14px; color:rgba(245,240,232,.45); margin-bottom:40px; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7; }
+.portfolio-preview-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:3px; margin-bottom:48px; }
+.portfolio-preview-img {
+  aspect-ratio:1; background-size:cover; background-position:center;
+  position:relative; overflow:hidden; transition:transform .5s;
 }
-.p-ctrl-next:hover { background:linear-gradient(to right, transparent 0%, rgba(0,0,0,.4) 100%); }
-.p-ctrl-next-icon {
-  width:36px; height:36px; border-radius:50%;
-  background:rgba(245,240,232,.12); border:1px solid rgba(245,240,232,.25);
-  display:flex; align-items:center; justify-content:center;
-  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-  transition:all .25s; transform:translateX(4px);
+.portfolio-preview-img::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,.25); transition:background .3s; }
+.portfolio-preview-img:hover::after { background:rgba(232,93,30,.3); }
+.btn-outline {
+  display:inline-block; border:1px solid rgba(245,240,232,.3); color:var(--cream);
+  padding:18px 48px; font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase; text-decoration:none;
+  transition:all .3s;
 }
-.p-ctrl-next:hover .p-ctrl-next-icon {
-  background:rgba(232,93,30,.65); border-color:rgba(232,93,30,.8);
-  transform:translateX(0); box-shadow:0 2px 16px rgba(232,93,30,.3);
-}
-.p-ctrl-next-icon svg { width:14px; height:14px; }
-
-.p-ctrl-prev {
-  position:absolute; left:0; top:0; bottom:0; width:22%;
-  display:flex; align-items:center; justify-content:center;
-  pointer-events:all; cursor:pointer; border:none; background:none; padding:0;
-  background:linear-gradient(to left, transparent 0%, rgba(0,0,0,.25) 100%);
-  transition:background .3s;
-}
-.p-ctrl-prev:hover { background:linear-gradient(to left, transparent 0%, rgba(0,0,0,.4) 100%); }
-.p-ctrl-prev-icon {
-  width:36px; height:36px; border-radius:50%;
-  background:rgba(245,240,232,.12); border:1px solid rgba(245,240,232,.25);
-  display:flex; align-items:center; justify-content:center;
-  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-  transition:all .25s; transform:translateX(-4px);
-}
-.p-ctrl-prev:hover .p-ctrl-prev-icon {
-  background:rgba(232,93,30,.65); border-color:rgba(232,93,30,.8);
-  transform:translateX(0); box-shadow:0 2px 16px rgba(232,93,30,.3);
-}
-.p-ctrl-prev-icon svg { width:14px; height:14px; }
-
-.p-ctrl-zoom {
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.85);
-  width:48px; height:48px; border-radius:50%;
-  background:rgba(245,240,232,.12); border:1px solid rgba(245,240,232,.25);
-  display:flex; align-items:center; justify-content:center;
-  pointer-events:all; cursor:pointer; padding:0;
-  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-  transition:all .3s cubic-bezier(.16,1,.3,1);
-}
-.p-ctrl-zoom:hover {
-  background:rgba(232,93,30,.7); border-color:rgba(232,93,30,.9);
-  transform:translate(-50%,-50%) scale(1);
-  box-shadow:0 4px 24px rgba(232,93,30,.35);
-}
-.p-ctrl-zoom svg { width:18px; height:18px; }
-
-/* Hide prev/next on items with single or no slides */
-.portfolio-item:not([data-multi-slide]) .p-ctrl-next,
-.portfolio-item:not([data-multi-slide]) .p-ctrl-prev { display:none; }
-
-@media (hover:none),(max-width:900px) {
-  .p-hover-controls { display:none !important; }
-}
+.btn-outline:hover { background:var(--orange); border-color:var(--orange); }
 
 /* BRANDS */
 #brands { background:var(--cream); padding:80px 56px; border-top:1px solid rgba(0,0,0,.06); }
@@ -313,24 +292,14 @@ nav.solid .nav-contact-btn { opacity: 1; visibility: visible; background: var(--
 .contact-title { font-family:'Playfair Display',serif; font-size:clamp(42px,4.5vw,72px); font-weight:900; color:var(--cream); line-height:1.05; margin-bottom:32px; }
 .contact-title em { font-style:italic; color:var(--orange); }
 .contact-body { font-size:14px; line-height:1.8; color:rgba(245,240,232,.45); max-width:360px; font-weight:400; }
-
-/* Contact Icon Links */
 .contact-icons { display:flex; gap:20px; align-items:center; }
 .contact-icon-link {
-  width:48px; height:48px; border-radius:50%;
-  border:1px solid rgba(245,240,232,.15);
-  display:flex; align-items:center; justify-content:center;
-  color:rgba(245,240,232,.45);
-  text-decoration:none;
-  transition:all .3s cubic-bezier(.16,1,.3,1);
+  width:48px; height:48px; border-radius:50%; border:1px solid rgba(245,240,232,.15);
+  display:flex; align-items:center; justify-content:center; color:rgba(245,240,232,.45);
+  text-decoration:none; transition:all .3s cubic-bezier(.16,1,.3,1);
 }
 .contact-icon-link svg { width:22px; height:22px; }
-.contact-icon-link:hover {
-  color:var(--orange); border-color:var(--orange);
-  background:rgba(232,93,30,.1);
-  transform:translateY(-3px);
-  box-shadow:0 6px 20px rgba(232,93,30,.15);
-}
+.contact-icon-link:hover { color:var(--orange); border-color:var(--orange); background:rgba(232,93,30,.1); transform:translateY(-3px); box-shadow:0 6px 20px rgba(232,93,30,.15); }
 .form-title { font-family:'Playfair Display',serif; font-size:32px; font-weight:700; margin-bottom:48px; line-height:1.2; }
 .form-title em { font-style:italic; color:var(--orange); }
 .form-group { margin-bottom:32px; }
@@ -375,8 +344,6 @@ footer { background:var(--black); padding:60px 56px 40px; border-top:1px solid r
 /* UX */
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
 section[id] { scroll-margin-top: 80px; }
-.form-input:invalid:not(:placeholder-shown) { border-color: #c0392b; }
-.form-input:valid:not(:placeholder-shown) { border-color: #2d7a2d; }
 ::selection { background: var(--orange); color: white; }
 img, svg { max-width: 100%; height: auto; }
 
@@ -385,124 +352,111 @@ img, svg { max-width: 100%; height: auto; }
 .back-to-top.visible { opacity:1; pointer-events:auto; }
 .back-to-top:hover { background:var(--orange); transform:translateY(-3px); }
 
-/* LIGHTBOX */
-.lb-overlay {
-  position:fixed; inset:0; z-index:9000;
-  background:rgba(0,0,0,0);
-  backdrop-filter:blur(0px) brightness(1);
-  -webkit-backdrop-filter:blur(0px) brightness(1);
-  display:flex; align-items:center; justify-content:center;
-  opacity:0; pointer-events:none;
-  transition:opacity .35s cubic-bezier(.16,1,.3,1), backdrop-filter .35s, background .35s;
-}
-.lb-overlay.open {
-  opacity:1; pointer-events:all;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(12px) brightness(.55);
-  -webkit-backdrop-filter:blur(12px) brightness(.55);
-}
-.lb-box {
-  position:relative;
-  max-width:88vw; max-height:88vh;
-  border-radius:4px; overflow:hidden;
-  box-shadow:0 32px 96px rgba(0,0,0,.7);
-  transform:scale(.9) translateY(24px);
-  transition:transform .4s cubic-bezier(.16,1,.3,1);
-  background:#111;
-  display:flex; align-items:center; justify-content:center;
-}
-.lb-overlay.open .lb-box {
-  transform:scale(1) translateY(0);
-}
-.lb-box img {
-  display:block; max-width:88vw; max-height:88vh;
-  width:auto; height:auto; object-fit:contain;
-}
-.lb-box video {
-  display:block; max-width:88vw; max-height:88vh;
-  width:auto; height:auto; object-fit:contain;
-}
-.lb-close {
-  position:fixed; top:28px; right:32px;
-  width:44px; height:44px; border-radius:50%;
-  background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.2);
-  color:rgba(245,240,232,.8); font-size:18px; line-height:1;
-  cursor:pointer; display:flex; align-items:center; justify-content:center;
-  z-index:9001; transition:background .2s, transform .2s;
-  opacity:0; transform:scale(.8);
-  transition:opacity .3s .1s, transform .3s .1s, background .2s;
-}
-.lb-overlay.open .lb-close { opacity:1; transform:scale(1); }
-.lb-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
-.lb-info {
-  position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(12px);
-  background:rgba(0,0,0,.6); backdrop-filter:blur(8px);
-  padding:10px 24px; border-radius:100px;
-  font-size:11px; letter-spacing:2px; text-transform:uppercase;
-  color:rgba(245,240,232,.6); white-space:nowrap;
-  opacity:0; transition:opacity .3s .15s, transform .3s .15s;
-  z-index:9001;
-}
-.lb-overlay.open .lb-info { opacity:1; transform:translateX(-50%) translateY(0); }
-
-/* Lightbox Gallery Nav Arrows */
-.lb-nav {
-  position:fixed; top:50%; z-index:9002;
-  width:48px; height:48px; border-radius:50%;
-  background:rgba(245,240,232,.08); border:1px solid rgba(245,240,232,.15);
-  color:rgba(245,240,232,.7); font-size:20px;
-  cursor:pointer; display:flex; align-items:center; justify-content:center;
-  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-  transition:all .25s; transform:translateY(-50%);
-  opacity:0; pointer-events:none;
-}
-.lb-overlay.open .lb-nav.lb-nav-visible { opacity:1; pointer-events:all; }
-.lb-nav:hover { background:var(--orange); border-color:var(--orange); color:white; }
-.lb-nav-prev { left:24px; }
-.lb-nav-next { right:24px; }
-.lb-nav svg { width:20px; height:20px; }
-.lb-counter {
-  position:fixed; top:32px; left:50%; transform:translateX(-50%);
-  font-size:11px; letter-spacing:2px; color:rgba(245,240,232,.4);
-  z-index:9001; opacity:0; transition:opacity .3s .15s;
-}
-.lb-overlay.open .lb-counter { opacity:1; }
-
 /* LOADING OVERLAY */
 .page-loader { position:fixed; inset:0; background:var(--black); z-index:10000; display:flex; align-items:center; justify-content:center; transition:opacity .6s, visibility .6s; }
 .page-loader.hidden { opacity:0; visibility:hidden; }
 .loader-mark { width:48px; height:48px; background:transparent; border:2px solid rgba(245,240,232,.15); position:relative; animation:rotateMark 2s linear infinite; }
 .loader-mark::after { content:''; position:absolute; width:20px; height:20px; background:var(--orange); top:8px; right:8px; }
 
-/* RESPONSIVE */
-@media (max-width:1200px) { .brands-grid{grid-template-columns:repeat(4,1fr);} }
+/* SERVICES — PDF FAITHFUL */
+.services-packs-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.3); }
+.svc-pack { padding:32px 28px; border-right:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; }
+.svc-pack:last-child { border-right:none; }
+.svc-pack-name { font-family:'Oswald',sans-serif; font-size:clamp(20px,2vw,28px); font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:3px; margin-bottom:24px; padding-bottom:16px; border-bottom:3px solid var(--orange); line-height:1.1; }
+.svc-pack-desc { font-size:12px; line-height:1.65; color:rgba(245,240,232,.5); margin-bottom:24px; }
+
+/* Toggle buttons */
+.svc-toggle {
+  background:none; border:none; padding:12px 0; width:100%;
+  display:flex; align-items:center; justify-content:space-between;
+  cursor:pointer; border-top:1px solid rgba(255,255,255,.06);
+  transition:all .2s;
+}
+.svc-toggle span { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; font-style:italic; color:var(--orange); }
+.svc-toggle svg { width:14px; height:14px; color:var(--orange); transition:transform .4s cubic-bezier(.16,1,.3,1); flex-shrink:0; }
+.svc-toggle.open svg { transform:rotate(180deg); }
+.svc-toggle:hover span { color:white; }
+
+/* Toggle content — animated */
+.svc-toggle-content { max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.16,1,.3,1), opacity .3s, padding .3s; opacity:0; padding:0 0; }
+.svc-toggle-content.open { max-height:500px; opacity:1; padding:8px 0 16px; }
+
+.svc-content-nums span { display:block; font-size:14px; font-weight:700; color:var(--cream); line-height:2; }
+.svc-toggle-content ul { list-style:none; padding:0; margin:0; }
+.svc-toggle-content li { font-size:11px; line-height:1.5; color:rgba(245,240,232,.45); padding:4px 0; display:flex; align-items:flex-start; gap:8px; }
+.svc-toggle-content li::before { content:'–'; color:var(--orange); flex-shrink:0; font-weight:700; }
+
+/* CTA */
+.svc-cta {
+  margin-top:auto; display:block; text-align:center; padding:16px; text-decoration:none;
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; background:var(--orange); color:white; transition:all .25s;
+}
+.svc-cta:hover { background:#d44d0e; transform:translateY(-2px); }
+
+/* Reference logo grid */
+.ref-logo-grid { display:grid; grid-template-columns:repeat(8,1fr); gap:2px; max-width:900px; margin:0 auto; }
+.ref-logo-cell { background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.08); padding:16px 12px; display:flex; align-items:center; justify-content:center; min-height:60px; transition:all .3s; }
+.ref-logo-cell:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.15); }
+.ref-logo-cell span { font-family:'Playfair Display',serif; font-size:13px; font-weight:700; color:rgba(245,240,232,.4); letter-spacing:1px; white-space:nowrap; transition:color .3s; }
+.ref-logo-cell:hover span { color:var(--cream); }
+
+/* PLAN TOGGLE STYLES */
+.pack-plan-toggle {
+  background:none; border:1px solid var(--orange); padding:12px 20px;
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer; color:var(--orange); width:100%;
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;
+  transition:all .3s;
+}
+.pack-plan-toggle:hover { background:var(--orange); color:white; }
+.pack-plan-toggle svg { width:14px; height:14px; transition:transform .4s cubic-bezier(.16,1,.3,1); }
+.pack-plan-toggle.open svg { transform:rotate(180deg); }
+.pack-plan-details {
+  max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.16,1,.3,1), opacity .4s; opacity:0;
+}
+.pack-plan-details.open { max-height:600px; opacity:1; }
+.pack-plan-details ul { list-style:none; padding:0; margin:0 0 20px; }
+.pack-plan-details li { font-size:11px; line-height:1.5; color:rgba(245,240,232,.5); padding:5px 0; border-bottom:1px solid rgba(255,255,255,.04); display:flex; align-items:flex-start; gap:8px; }
+.pack-plan-details li::before { content:'–'; color:var(--orange); flex-shrink:0; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:1200px) {
+  .packs-grid { grid-template-columns: repeat(2, 1fr); }
+  .brands-grid{grid-template-columns:repeat(4,1fr);}
+  .portfolio-preview-grid { grid-template-columns:repeat(4,1fr); }
+}
 @media (max-width:900px) {
-  nav{padding:20px 24px;} nav.solid{padding:6px 24px;}
-  nav.solid .nav-logo-img{height:90px;}
-  .nav-links,.nav-contact-btn{display:none!important;}
-  .nav-hamburger{display:flex;}
+  nav{padding:12px 16px;flex-wrap:wrap;gap:8px;}
+  .nav-logo-img{height:90px!important;}
+  .nav-left{gap:0;flex:1;min-width:0;}
+  .nav-links{gap:12px;flex-wrap:wrap;justify-content:center;order:3;width:100%;padding:4px 0 0;}
+  .nav-links a{font-size:9px;letter-spacing:1px;color:var(--black)!important;}
+  .nav-contact-btn{font-size:9px;letter-spacing:1px;padding:7px 14px;}
+  .nav-hamburger{display:none!important;}
+  .nav-dropdown-menu{display:none!important;}
   #hero{grid-template-columns:1fr;}
   .hero-right{height:60vw;min-height:280px;}
   .hero-left{padding:100px 24px 60px;}
   .hero-counter{right:24px;}
+  .vision-block{padding:60px 24px;}
   #about{grid-template-columns:1fr;}
   .about-left,.about-right{padding:72px 24px;}
-  #services{padding:80px 24px;}
+  #services{padding:60px 24px !important;}
+  .services-packs-grid{grid-template-columns:1fr !important;}
+  .svc-pack{border-right:none !important;border-bottom:1px solid rgba(255,255,255,.08);padding:28px 20px;}
+  .svc-pack:last-child{border-bottom:none;}
+  .ref-logo-grid{grid-template-columns:repeat(4,1fr) !important;}
   .services-header{flex-direction:column;align-items:flex-start;gap:24px;margin-bottom:48px;}
-  .service-row{grid-template-columns:50px 1fr;gap:16px;padding:28px 0;}
-  .service-desc,.service-tag{display:none;}
+  .packs-grid { grid-template-columns: 1fr; gap:16px; }
+  .pack-card { padding:32px 24px; }
   #brands{padding:60px 24px;}
   .brands-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:40px;}
   .brands-grid{grid-template-columns:repeat(2,1fr);}
   .brand-cell{min-height:120px;}
   .brand-cell-name{font-size:15px;}
-  #portfolio{padding:80px 0 0;}
-  .portfolio-header{padding:0 24px 48px;flex-direction:column;align-items:flex-start;gap:20px;}
-  .portfolio-grid{grid-template-columns:1fr 1fr;}
-  .portfolio-item.featured{grid-column:span 2; aspect-ratio:8/5;}
-  .portfolio-item.featured .p-name{font-size:28px;}
-  .p-name{font-size:22px;}
-  .p-inner{padding:20px 20px;}
+  #portfolio-preview{padding:60px 24px;}
+  .portfolio-preview-grid{grid-template-columns:repeat(2,1fr);}
   #contact{grid-template-columns:1fr;}
   .contact-left,.contact-right{padding:72px 24px;}
   .form-row{grid-template-columns:1fr;}
@@ -511,19 +465,14 @@ img, svg { max-width: 100%; height: auto; }
   .footer-bottom{flex-direction:column;align-items:flex-start;gap:12px;}
   .footer-nav{flex-wrap:wrap;gap:20px;}
 }
+@media (max-width:480px) {
+  .packs-grid { grid-template-columns: 1fr; }
+  .brands-grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-preview-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
-
-<!-- LIGHTBOX -->
-<div class="lb-overlay" id="lbOverlay">
-  <div class="lb-box" id="lbBox"></div>
-  <button class="lb-close" id="lbClose" aria-label="Kapat">✕</button>
-  <button class="lb-nav lb-nav-prev" id="lbPrev" aria-label="Önceki"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg></button>
-  <button class="lb-nav lb-nav-next" id="lbNext" aria-label="Sonraki"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg></button>
-  <div class="lb-counter" id="lbCounter"></div>
-  <div class="lb-info" id="lbInfo"></div>
-</div>
 
 <div class="page-loader" id="pageLoader">
   <div class="loader-mark"></div>
@@ -532,16 +481,37 @@ img, svg { max-width: 100%; height: auto; }
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="cursorFollower"></div>
 
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Menüyü kapat">✕</button>
   <a href="#about" onclick="closeMobileMenu()">Hakkında</a>
   <a href="#services" onclick="closeMobileMenu()">Hizmetler</a>
-  <a href="#portfolio" onclick="closeMobileMenu()">Projeler</a>
-  <a href="#brands" onclick="closeMobileMenu()">Markalar</a>
+  <button class="mobile-brands-toggle" id="mobileBrandsToggle" onclick="toggleMobileBrands()">
+    Markalar <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+  </button>
+  <div class="mobile-brands-list" id="mobileBrandsList">
+    <a href="https://instagram.com/taffburger" target="_blank" onclick="closeMobileMenu()">Taff Burger</a>
+    <a href="https://instagram.com/onioncaferestaurant" target="_blank" onclick="closeMobileMenu()">Onion Cafe</a>
+    <a href="#brands" onclick="closeMobileMenu()">Rafine</a>
+    <a href="https://instagram.com/ethique.pb" target="_blank" onclick="closeMobileMenu()">Ethique Patisserie</a>
+    <a href="https://instagram.com/kurukahvecinuritoplar" target="_blank" onclick="closeMobileMenu()">Nuri Toplar</a>
+    <a href="https://instagram.com/titi.restaurant" target="_blank" onclick="closeMobileMenu()">TiTi Meat House</a>
+    <a href="https://instagram.com/floryasazeli" target="_blank" onclick="closeMobileMenu()">Florya Şazeli</a>
+    <a href="https://instagram.com/choco.zuma" target="_blank" onclick="closeMobileMenu()">Choco Zuma</a>
+    <a href="#brands" onclick="closeMobileMenu()">Mendel's</a>
+    <a href="#brands" onclick="closeMobileMenu()">Upperdeck</a>
+    <a href="#brands" onclick="closeMobileMenu()">Kasnak</a>
+    <a href="#brands" onclick="closeMobileMenu()">Paye Patisserie</a>
+    <a href="#brands" onclick="closeMobileMenu()">Bonkers</a>
+    <a href="#brands" onclick="closeMobileMenu()">Buontalenti</a>
+    <a href="#brands" onclick="closeMobileMenu()">Smash &amp; Sweet</a>
+  </div>
+  <a href="portfolio.html" onclick="closeMobileMenu()">Portföy Seçkisi</a>
   <a href="#contact" onclick="closeMobileMenu()"><em>Proje Başlat →</em></a>
   <div class="mobile-menu-footer">Pure Pixel Studio — İstanbul</div>
 </div>
 
+<!-- NAV -->
 <nav id="navbar" aria-label="Ana navigasyon">
   <div class="nav-left">
     <a href="#" class="nav-logo">
@@ -551,8 +521,27 @@ img, svg { max-width: 100%; height: auto; }
     <ul class="nav-links">
       <li><a href="#about">Hakkında</a></li>
       <li><a href="#services">Hizmetler</a></li>
-      <li><a href="#portfolio">Projeler</a></li>
-      <li><a href="#brands">Markalar</a></li>
+      <li class="nav-dropdown">
+        <a href="#brands">Markalar ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="https://instagram.com/taffburger" target="_blank">Taff Burger</a>
+          <a href="https://instagram.com/onioncaferestaurant" target="_blank">Onion Cafe</a>
+          <a href="#brands">Rafine</a>
+          <a href="https://instagram.com/ethique.pb" target="_blank">Ethique Patisserie</a>
+          <a href="https://instagram.com/kurukahvecinuritoplar" target="_blank">Nuri Toplar</a>
+          <a href="https://instagram.com/titi.restaurant" target="_blank">TiTi Meat House</a>
+          <a href="https://instagram.com/floryasazeli" target="_blank">Florya Şazeli</a>
+          <a href="https://instagram.com/choco.zuma" target="_blank">Choco Zuma</a>
+          <a href="#brands">Mendel's</a>
+          <a href="#brands">Upperdeck</a>
+          <a href="#brands">Kasnak</a>
+          <a href="#brands">Paye Patisserie</a>
+          <a href="#brands">Bonkers</a>
+          <a href="#brands">Buontalenti</a>
+          <a href="#brands">Smash &amp; Sweet</a>
+        </div>
+      </li>
+      <li><a href="portfolio.html">Portföy</a></li>
       <li><a href="#contact">İletişim</a></li>
     </ul>
   </div>
@@ -562,14 +551,15 @@ img, svg { max-width: 100%; height: auto; }
   </div>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
   <div class="hero-left">
     <div class="hero-marks">
       <div class="big-mark"><div class="small-mark"></div></div>
     </div>
-    <p class="hero-eyebrow">Kolektif Dijital İçerik & Marka Stüdyosu</p>
-    <h1 class="hero-title">Markanızı<br><em>Görünür</em><br>Kılıyoruz.</h1>
-    <p class="hero-desc">Fotoğraf, video, ses tasarımı ve post-prodüksiyon alanlarında uzman bağımsız sanatçılarla her marka için en doğru kreatif ekibi bir araya getiriyoruz.</p>
+    <p class="hero-eyebrow">Kolektif Dijital İçerik & Sanat Stüdyosu</p>
+    <h1 class="hero-title">Her Karede<br><em>Anlam,</em><br>Her Tasarımda<br><em>İlham.</em></h1>
+    <p class="hero-desc">Ticaretin sınırlarını sanatın eşsizliğiyle birleştiriyoruz. Yaşamın ritmi, duyguların derinliği ve estetiğin gücüyle markanızın hikayesini anlatıyoruz.</p>
     <div class="hero-cta">
       <button class="btn-main" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Proje Başlat</button>
       <span class="hero-scroll-text">↓ Keşfet</span>
@@ -578,13 +568,13 @@ img, svg { max-width: 100%; height: auto; }
   </div>
   <div class="hero-right">
     <div class="hero-slider" id="heroSlider">
-      <div class="hero-slider-img active" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_1200/v1772971529/17871892089289897_lwbhu2.jpg')"></div>
-      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_1200/v1772971587/18059341364075711_vxivsj.jpg')"></div>
-      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_1200/v1772971586/18052854500247987_iyzjbg.jpg')"></div>
-      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_1200/v1772971593/17845712190542722_ajd718.jpg')"></div>
-      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_1200/v1772971560/17962455713743056_jqkzgg.jpg')"></div>
-      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_1200/v1772971591/18036927974401607_qfqee1.jpg')"></div>
-      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_1200/v1772971562/17974296032929787_plnlis.jpg')"></div>
+      <div class="hero-slider-img active" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971529/17871892089289897_lwbhu2.jpg')"></div>
+      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971587/18059341364075711_vxivsj.jpg')"></div>
+      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971586/18052854500247987_iyzjbg.jpg')"></div>
+      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971593/17845712190542722_ajd718.jpg')"></div>
+      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971560/17962455713743056_jqkzgg.jpg')"></div>
+      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971591/18036927974401607_qfqee1.jpg')"></div>
+      <div class="hero-slider-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971562/17974296032929787_plnlis.jpg')"></div>
     </div>
     <div class="hero-clients">
       <p class="hero-clients-label">Birlikte çalıştığımız markalar</p>
@@ -598,6 +588,7 @@ img, svg { max-width: 100%; height: auto; }
   </div>
 </section>
 
+<!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
     <span>Fotoğraf</span><span class="dot">✦</span><span>Videografi</span><span class="dot">✦</span><span>Art Direction</span><span class="dot">✦</span><span>Food Styling</span><span class="dot">✦</span><span>Sosyal Medya</span><span class="dot">✦</span><span>Post Prodüksiyon</span><span class="dot">✦</span><span>Ses Tasarımı</span><span class="dot">✦</span><span>Ürün Çekimi</span><span class="dot">✦</span>
@@ -605,12 +596,13 @@ img, svg { max-width: 100%; height: auto; }
   </div>
 </div>
 
+<!-- ABOUT -->
 <section id="about">
   <div class="about-left">
     <div>
       <p class="section-tag reveal">Biz Kimiz</p>
-      <h2 class="about-headline reveal reveal-delay-1">Piksel<br>Mükemmeliyetçileri<br><em>Buradayız.</em></h2>
-      <p class="about-body reveal reveal-delay-2">Pure Pixel Studio, yemek endüstrisi için kreatif prodüksiyon ve reklam hizmetlerinde uzmanlaşmış bağımsız bir kolektif stüdyodür. Görsel hikaye anlatımının gücünü derin sektör uzmanlığıyla birleştirerek marka anlatılarını estetik, otantik ve duygusal olarak etkileyici bir şekilde görünür kılıyoruz.<br><br>Ekibimiz fotoğraf, video, ses tasarımı ve post-prodüksiyon alanlarında uzmanlaşmış bağımsız sanatçılardan oluşur.</p>
+      <h2 class="about-headline reveal reveal-delay-1">Sanatı Hayatın<br><em>Özüne</em><br>Taşıyanlar.</h2>
+      <p class="about-body reveal reveal-delay-2">Pure Pixel Studio, yemek endüstrisi için kreatif prodüksiyon ve reklam hizmetlerinde uzmanlaşmış bağımsız bir kolektif stüdyodür. Her kare ve tasarımla insana anlam katan, ilham veren işler üretiyoruz.<br><br>Ekibimiz fotoğraf, video, ses tasarımı ve post-prodüksiyon alanlarında uzmanlaşmış bağımsız sanatçılardan oluşur. Ticaretin sınırlarını sanatın eşsizliğiyle birleştiren bir yapıdayız.</p>
     </div>
     <div class="about-stats reveal reveal-delay-3">
       <div class="stat"><div class="stat-n">15+</div><div class="stat-l">Marka</div></div>
@@ -620,373 +612,189 @@ img, svg { max-width: 100%; height: auto; }
     </div>
   </div>
   <div class="about-right">
-    <p class="about-quote reveal">"Yemek kültürünü bir sanat formu olarak görüyor, her projede estetik değer, teknik mükemmellik ve duygusal etkiyi harmanlıyoruz."</p>
+    <p class="about-quote reveal">"Sanat sadece bir ifade biçimi değil, hayatın ta kendisi. İlham vermek için buradayız."</p>
     <p class="about-quote-attr reveal reveal-delay-1">— Pure Pixel Studio</p>
     <div class="about-values reveal reveal-delay-2">
-      <div class="value-item"><span class="value-num">01.</span><span class="value-name">Görsel Hikaye Anlatımı</span><span class="value-arrow">→</span></div>
-      <div class="value-item"><span class="value-num">02.</span><span class="value-name">Proje Bazlı Kolektif Model</span><span class="value-arrow">→</span></div>
-      <div class="value-item"><span class="value-num">03.</span><span class="value-name">Teknik Mükemmellik</span><span class="value-arrow">→</span></div>
-      <div class="value-item"><span class="value-num">04.</span><span class="value-name">Duygusal Etki & Otantiklik</span><span class="value-arrow">→</span></div>
-      <div class="value-item"><span class="value-num">05.</span><span class="value-name">Yemek Kültürü Uzmanlığı</span><span class="value-arrow">→</span></div>
+      <div class="value-item"><span class="value-num">01.</span><span class="value-name">Her Karede Anlam</span><span class="value-arrow">→</span></div>
+      <div class="value-item"><span class="value-num">02.</span><span class="value-name">Kolektif Yaratıcılık</span><span class="value-arrow">→</span></div>
+      <div class="value-item"><span class="value-num">03.</span><span class="value-name">Estetik & Özgünlük</span><span class="value-arrow">→</span></div>
+      <div class="value-item"><span class="value-num">04.</span><span class="value-name">Sanat & Ticaret Dengesi</span><span class="value-arrow">→</span></div>
+      <div class="value-item"><span class="value-num">05.</span><span class="value-name">İlham Veren Prodüksiyon</span><span class="value-arrow">→</span></div>
     </div>
   </div>
 </section>
 
-<section id="services">
-  <div class="services-header">
-    <h2 class="services-title reveal">Ne<br><em>Yapıyoruz?</em></h2>
-    <p class="services-intro reveal reveal-delay-1">Markanızın ihtiyaç duyduğu her dijital dokunuşu, titizlikle ve yaratıcılıkla hayata geçiriyoruz.</p>
+<!-- SERVICES — PDF TASARIMINA BİREBİR -->
+<section id="services" style="background:var(--dark-gray);padding:80px 56px 60px;">
+  <div style="text-align:center;margin-bottom:48px;" class="reveal">
+    <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(22px,3vw,36px);font-weight:700;color:var(--cream);text-transform:uppercase;letter-spacing:6px;">Prodüksiyon & İçerik Üretimi Hizmetleri</h2>
   </div>
-  <div>
-    <div class="service-row reveal"><span class="service-n">01.</span><span class="service-name">Fotoğraf Prodüksiyon</span><span class="service-desc">Yemek, mekan ve ürün fotoğrafçılığı — markanızın görsel hikayesini oluşturuyoruz.</span><span class="service-tag">Photo</span></div>
-    <div class="service-row reveal reveal-delay-1"><span class="service-n">02.</span><span class="service-name">Video Prodüksiyon</span><span class="service-desc">Profesyonel videografi ile markanızın atmosferini hareketle anlatıyoruz.</span><span class="service-tag">Video</span></div>
-    <div class="service-row reveal reveal-delay-2"><span class="service-n">03.</span><span class="service-name">Sosyal Medya İçerik</span><span class="service-desc">Markanızın dijital varlığını güçlendiren stratejik içerikler üretiyoruz.</span><span class="service-tag">Content</span></div>
-    <div class="service-row reveal reveal-delay-3"><span class="service-n">04.</span><span class="service-name">Art Direction</span><span class="service-desc">Projenizin kreatif yönünü belirleyip kusursuz bir görsel dil oluşturuyoruz.</span><span class="service-tag">Creative</span></div>
-    <div class="service-row reveal"><span class="service-n">05.</span><span class="service-name">Post Prodüksiyon</span><span class="service-desc">Renk düzenleme, retouching ve ses tasarımı ile sonucu mükemmelleştiriyoruz.</span><span class="service-tag">Post</span></div>
-    <div class="service-row reveal reveal-delay-1"><span class="service-n">06.</span><span class="service-name">Food Styling</span><span class="service-desc">Her kareyi sanat eserine dönüştüren profesyonel yemek tasarımı ve stil çalışması.</span><span class="service-tag">Styling</span></div>
+
+  <div class="services-packs-grid">
+
+    <!-- CORE PACK -->
+    <div class="svc-pack reveal">
+      <h3 class="svc-pack-name">Core Pack</h3>
+      <p class="svc-pack-desc">Sosyal medyaya ilk adımını atan küçük işletmeler ve girişimciler için tasarlanmış bu paket; içerik üreticisi ve asistandan oluşan ekibimizle aylık düzenli çekim, temel ekipman desteği ve sosyal medya yönetimine rehberlik sunarak dijital varlığınızı sağlam temeller üzerine inşa eder.</p>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>İçerik Planı:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <div class="svc-content-nums"><span>Post: 4</span><span>Reels: 8</span><span>Story: 30</span></div>
+      </div>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>Hizmetler:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <ul>
+          <li>Ayda 1 kez çekim</li>
+          <li>Çekim öncesi içerik planlaması</li>
+          <li>Çekim için gerekli ekip, ekipman ve stüdyo temini</li>
+          <li>İçerik üreticisi + asistan ile çekim</li>
+          <li>Rakip & sektör analizi</li>
+          <li>Paylaşım planlaması ve sosyal medya akışı oluşturulması için sosyal medya yönetimine destek</li>
+        </ul>
+      </div>
+
+      <a href="#contact" class="svc-cta" onclick="selectPack('Core Pack')">Bilgi Al →</a>
+    </div>
+
+    <!-- PLUS PACK -->
+    <div class="svc-pack reveal reveal-delay-1">
+      <h3 class="svc-pack-name">Plus Pack</h3>
+      <p class="svc-pack-desc">Dijital büyümesini hızlandırmak isteyen markalar için hazırlanan bu paket; profesyonel videographer ve asistandan oluşan çekim ekibi, Instagram & Facebook hesap yönetimi, reklam yönetimi ve aylık raporlama ile sosyal medya stratejinizi bir üst seviyeye taşır.</p>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>İçerik Planı:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <div class="svc-content-nums"><span>Post: 4</span><span>Reels: 10</span><span>Story: 60</span></div>
+      </div>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>Hizmetler:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <ul>
+          <li>Ayda 1 kez çekim</li>
+          <li>Instagram & Facebook & hesap yönetimi</li>
+          <li>Reklam Yönetimi (Önerilen bütçe: 30.000TL)</li>
+          <li>Rakip & sektör analizi</li>
+          <li>Aylık Planlama ve Raporlama</li>
+          <li>Çekim öncesi içerik planlaması</li>
+          <li>Çekim için gerekli ekip, ekipman ve stüdyo temini</li>
+          <li>Profesyonel videographer + asistan ile çekim</li>
+        </ul>
+      </div>
+
+      <a href="#contact" class="svc-cta" onclick="selectPack('Plus Pack')">Bilgi Al →</a>
+    </div>
+
+    <!-- PRIME PACK -->
+    <div class="svc-pack reveal reveal-delay-2">
+      <h3 class="svc-pack-name">Prime Pack</h3>
+      <p class="svc-pack-desc">Birden fazla platformda güçlü ve tutarlı bir marka kimliği oluşturmak isteyen kurumsal işletmeler için tasarlanmış bu paket; profesyonel videographer, fotoğrafçı ve asistandan oluşan tam prodüksiyon ekibi, üç platform yönetimi, kriz iletişimi desteği ve aylık strateji toplantısıyla markanızı rakiplerinizden bir adım öne taşır.</p>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>İçerik Planı:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <div class="svc-content-nums"><span>Post: 4</span><span>Reels: 12</span><span>Story: 60+</span></div>
+      </div>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>Hizmetler:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <ul>
+          <li>Ayda 1 kez çekim</li>
+          <li>Instagram & Facebook & TikTok & hesap yönetimi</li>
+          <li>Reklam Yönetimi (Önerilen bütçe: 40.000TL)</li>
+          <li>Aylık Planlama ve Raporlama</li>
+          <li>Çekim için gerekli ekip, ekipman ve stüdyo temini</li>
+          <li>Profesyonel videographer + fotoğrafçı + asistan ile çekim</li>
+          <li>Çekim öncesi içerik planlaması, senaryo ve shot list</li>
+          <li>Rakip & sektör analizi</li>
+          <li>Trend & algoritma takibi</li>
+          <li>Kriz iletişimi desteği, olumsuz yorum/durum yönetimi</li>
+          <li>Her ay strateji planlama toplantısı</li>
+        </ul>
+      </div>
+
+      <a href="#contact" class="svc-cta" onclick="selectPack('Prime Pack')">Bilgi Al →</a>
+    </div>
+
+    <!-- ESSENTIAL PACK -->
+    <div class="svc-pack reveal reveal-delay-3">
+      <h3 class="svc-pack-name">Essential Pack</h3>
+      <p class="svc-pack-desc">Dört büyük platformda maksimum etki ve tam kontrol arayan markalar için en kapsamlı çözüm; ayda iki kez gerçekleştirilen profesyonel çekimler, cast desteği, kriz iletişimi yönetimi, rakip analizi ve aylık strateji toplantısıyla markanızı dijitalde zirveye taşır.</p>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>İçerik Planı:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <div class="svc-content-nums"><span>Post: 4</span><span>Reels: 15</span><span>Story: 60+</span></div>
+      </div>
+
+      <button class="svc-toggle" onclick="toggleSection(this)">
+        <span>Hizmetler:</span>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l4 4 4-4"/></svg>
+      </button>
+      <div class="svc-toggle-content">
+        <ul>
+          <li>Ayda 2 kez çekim</li>
+          <li>Instagram & Facebook & TikTok & LinkedIn hesap yönetimi</li>
+          <li>Reklam Yönetimi (Önerilen bütçe: 50.000TL)</li>
+          <li>Aylık Planlama ve Raporlama</li>
+          <li>Çekim için gerekli ekip, ekipman ve stüdyo temini</li>
+          <li>Profesyonel videographer + fotoğrafçı + asistan ile çekim + cast desteği</li>
+          <li>Çekim öncesi içerik planlaması, senaryo ve shot list</li>
+          <li>Rakip & sektör analizi</li>
+          <li>Trend & algoritma takibi</li>
+          <li>Kriz iletişimi desteği – olumsuz yorum/durum yönetimi</li>
+          <li>Her ay strateji planlama toplantısı</li>
+        </ul>
+      </div>
+
+      <a href="#contact" class="svc-cta" onclick="selectPack('Essential Pack')">Bilgi Al →</a>
+    </div>
+
   </div>
-</section>
 
-<section id="portfolio">
-  <div class="portfolio-header">
-    <h2 class="portfolio-title reveal">Portföy<br><em>Seçkisi</em></h2>
-    <div class="portfolio-count reveal">15+</div>
-  </div>
-  <div class="portfolio-grid">
-
-    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971529/17871892089289897_lwbhu2.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971532/18349792609147101_fw9mwu.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971682/18050092925427541_crlpva.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971680/17905030656325080_nkjrn0.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">01</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf & Video</p><h3 class="p-name">Taff Burger</h3><p class="p-tag">1 yıllık iş birliği</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971563/18028302827333697_qx2fi4.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971528/17847034233410422_jtsgqx.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971566/18025297616368511_sdlp8l.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971723/18090353644981921_zklj4p.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971683/17986718732760254_m89u0x.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971681/17905280157161840_lzmpaa.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">02</span></div>
-      <div class="p-inner"><p class="p-category">Kafe & Restoran • İçerik</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Üsküdar</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971587/18059341364075711_vxivsj.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971588/18043477709461190_bbdnxn.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18071227165642523_ctdkof.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18025124840361959_v2d9sq.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971531/17971721873831367_yhn1oz.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">03</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Fine Dining</p><h3 class="p-name">Rafine</h3><p class="p-tag">Yemek & Mekan Fotoğrafçılığı</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971586/18052854500247987_iyzjbg.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18306249613220593_qoknoq.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971564/18104265577524998_mpqkfm.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971561/18075866825513973_n5lex8.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971532/18358126531080321_bls26l.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">04</span></div>
-      <div class="p-inner"><p class="p-category">Kahve • Fotoğraf & Video</p><h3 class="p-name">Kurukahveci Nuri Toplar</h3><p class="p-tag">Türk kahvesi mirası</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971679/18156117343401435_c4tzxw.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971635/17925887082158239_mc6nua.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971637/17931657789121332_fqlspv.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">05</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Kreatif Prodüksiyon</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Bee Happy Agency ile</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971637/17932565793128597_fqn1hg.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">06</span></div>
-      <div class="p-inner"><p class="p-category">Pastane • Ürün & Sosyal Medya</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971558/17928025467117652_ek6odm.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">06b</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971562/17974296032929787_plnlis.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971562/18358374121081842_c1b33s.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971563/18286846507272959_zazngk.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971585/18389097025192757_nvazrq.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">07</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Yemek Fotoğrafçılığı</p><h3 class="p-name">Florya Şazeli</h3><p class="p-tag">Özel anlar, özel lezzetler</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971560/17962455713743056_jqkzgg.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971561/18024692153378602_qrdqcw.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971528/17915834196068561_gikgjp.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971627/18043741547372046_dx5z9r.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">08</span></div>
-      <div class="p-inner"><p class="p-category">Çikolata • Ürün Çekimi</p><h3 class="p-name">Choco Zuma</h3><p class="p-tag">Unutulmaz lezzetler</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971623/18039994247308137_prnitu.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971595/18031243967422192_fkojwi.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971608/17860530333422194_spqnnh.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">09</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf</p><h3 class="p-name">Kasnak</h3><p class="p-tag">Fotoğraf Prodüksiyon</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971593/17845712190542722_ajd718.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971592/17859027054419447_jufagv.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971595/18417162247103491_fomjeu.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971623/17853867777469425_wzlixf.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971629/18049624328542792_wr7m2a.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971594/18070859966156103_dtuh0f.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971628/18084576388810291_tfxdmx.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971627/17919061524161431_fcvbif.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971594/18103458970583645_ertlm1.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">10</span></div>
-      <div class="p-inner"><p class="p-category">Restoran & Mekan</p><h3 class="p-name">Upperdeck</h3><p class="p-tag">Mekan & Yemek Fotoğrafçılığı</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971591/18036927974401607_qfqee1.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971625/17903058771226949_lumj1p.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971636/17883961701342564_rtnxhl.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971621/18070528270864338_dvmeed.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">11</span></div>
-      <div class="p-inner"><p class="p-category">Pastane • Ürün Çekimi</p><h3 class="p-name">Paye Patisserie</h3><p class="p-tag">Her tatlının hikayesi</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971639/18063196889453253_byg4yk.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971641/18047574047674413_zljefv.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">12</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • İçerik Üretimi</p><h3 class="p-name">Mendel's</h3><p class="p-tag">Mutlu anlar, lezzetli kareler</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18386291581181614_oipdk9.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">12b</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971622/18049506535982977_amonvj.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971533/18064348051903679_wr3xzj.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">13</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • İçerik Üretimi</p><h3 class="p-name">Bonkers</h3><p class="p-tag">Yaratıcı içerik prodüksiyonu</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971683/18067347143432797_g6oa5b.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">14</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf & Video</p><h3 class="p-name">Taff Burger</h3><p class="p-tag">1 yıllık iş birliği</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971621/18070528270864338_dvmeed.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971622/18049506535982977_amonvj.jpg","https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971594/18070859966156103_dtuh0f.jpg"]' style="position:relative; overflow:hidden; cursor:pointer; aspect-ratio:4/5;">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971644/18100036912690625_me8cpw.mp4" type="video/mp4">
-      </video>
-      <div class="p-bg" style="z-index:1;opacity:0;transition:opacity 0.6s;"></div>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:2;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:3;"><span class="p-num">15</span></div>
-      <div class="p-inner" style="position:relative;z-index:3;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
-      <div class="p-slider-dot-wrap" style="position:absolute;bottom:28px;left:32px;z-index:3;"></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:3;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971628/18084576388810291_tfxdmx.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">16</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf</p><h3 class="p-name">Upperdeck</h3><p class="p-tag">Mekan Çekimi</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971729/18083932831879616_sbakod.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">16b</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971755/18371468440144755_d86rt5.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">16c</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kahve • Video</p><h3 class="p-name">Nuri Toplar</h3><p class="p-tag">Türk Kahvesi</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18294556426260450_i5rpsb.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">17</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Kreatif Prodüksiyon</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971733/17970686729796712_wocpqp.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">18</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Kreatif Prodüksiyon</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971755/18371468440144755_d86rt5.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">19</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kahve • Video</p><h3 class="p-name">Nuri Toplar</h3><p class="p-tag">Türk Kahvesi</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971636/18019287428613403_fotbfv.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">19b</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971642/18087202834951257_tnnjwv.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">20</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971742/18136748755465348_phh4b9.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">21</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">Mashhat</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971742/18094925807496622_uromak.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">22</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">Mashhat</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971733/17843997351649227_ezhgvw.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">23</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971729/18083932831879616_sbakod.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">24</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18386291581181614_oipdk9.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">25</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971742/18094925807496622_uromak.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">25b</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">Mashhat</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971558/17928025467117652_ek6odm.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">25c</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item featured reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971676/18294556426260450_i5rpsb.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">26</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Restoran • Video</p><h3 class="p-name">TiTi Meat House</h3><p class="p-tag">Kreatif Prodüksiyon</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971636/18019287428613403_fotbfv.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">27</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Pastane • Video</p><h3 class="p-name">Ethique Patisserie</h3><p class="p-tag">%100 Vegan</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal pf-video-item">
-      <video muted loop playsinline preload="none" class="portfolio-video-bg lazy-video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="https://res.cloudinary.com/dsegp515d/video/upload/q_auto,w_480/v1772971733/17843997351649227_ezhgvw.mp4" type="video/mp4">
-      </video>
-      <div class="p-overlay" style="position:absolute;inset:0;z-index:1;"></div>
-      <div class="p-num-wrap" style="position:absolute;top:28px;left:32px;z-index:2;"><span class="p-num">28</span></div>
-      <div class="p-inner" style="position:relative;z-index:2;padding:28px 32px;"><p class="p-category">Kafe & Restoran • Video</p><h3 class="p-name">Onion Cafe</h3><p class="p-tag">Dijital İçerik</p></div>
-      <div class="p-arrow" style="position:absolute;bottom:28px;right:28px;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
-    <div class="portfolio-item reveal" data-slides='["https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971683/18067347143432797_g6oa5b.jpg"]'>
-      <div class="p-bg"></div><div class="p-overlay"></div>
-      <div class="p-num-wrap"><span class="p-num">29</span></div>
-      <div class="p-inner"><p class="p-category">Restoran • Fotoğraf & Video</p><h3 class="p-name">Taff Burger</h3><p class="p-tag">1 yıllık iş birliği</p></div>
-      <div class="p-slider-dot-wrap"></div>
-      <div class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.5"><path d="M1 7h12M9 3l4 4-4 4"/></svg></div>
-    </div>
-
+  <!-- REFERANSLARIMIZ — Olduğu gibi görsel -->
+  <div style="margin-top:64px;text-align:center;border-top:1px solid rgba(255,255,255,.08);padding-top:48px;" class="reveal">
+    <p style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:var(--cream);margin-bottom:32px;">Referanslarımız</p>
+    <img src="referanslar.png" alt="Pure Pixel Studio Referansları — Bonkers, Mendel's, Kasnak, Ethique, Kurukahveci, Onion, Şazeli, Taff, TiTi, Rafine, Upperdeck, Pâye, Nostalji, Pantene, İntiba" style="width:100%;max-width:1000px;height:auto;display:block;margin:0 auto;">
   </div>
 </section>
 
+<!-- PORTFOLIO PREVIEW + CTA -->
+<section id="portfolio-preview">
+  <h2 class="portfolio-preview-title reveal">Portföy<br><em>Seçkisi</em></h2>
+  <p class="portfolio-preview-desc reveal reveal-delay-1">Her markadan bir an, bir hikaye. Tüm projelerimizi keşfetmek için portföy sayfamızı ziyaret edin.</p>
+  <div class="portfolio-preview-grid reveal reveal-delay-2">
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971529/17871892089289897_lwbhu2.jpg')"></div>
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971563/18028302827333697_qx2fi4.jpg')"></div>
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971587/18059341364075711_vxivsj.jpg')"></div>
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971586/18052854500247987_iyzjbg.jpg')"></div>
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971679/18156117343401435_c4tzxw.jpg')"></div>
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971637/17932565793128597_fqn1hg.jpg')"></div>
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971593/17845712190542722_ajd718.jpg')"></div>
+    <div class="portfolio-preview-img" style="background-image:url('https://res.cloudinary.com/dsegp515d/image/upload/f_auto,q_auto,w_800/v1772971560/17962455713743056_jqkzgg.jpg')"></div>
+  </div>
+  <a href="portfolio.html" class="btn-outline reveal reveal-delay-3">Tüm Projeleri Gör →</a>
+</section>
+
+<!-- BRANDS -->
 <section id="brands">
   <div class="brands-header">
     <h2 class="brands-title reveal">Çalıştığımız<br><em>Markalar</em></h2>
@@ -1056,6 +864,7 @@ img, svg { max-width: 100%; height: auto; }
   </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
   <div class="contact-left">
     <div>
@@ -1098,6 +907,10 @@ img, svg { max-width: 100%; height: auto; }
           <button type="button" class="form-option" onclick="toggleOption(this)">Art Direction</button>
           <button type="button" class="form-option" onclick="toggleOption(this)">Food Styling</button>
           <button type="button" class="form-option" onclick="toggleOption(this)">Post Prodüksiyon</button>
+          <button type="button" class="form-option" onclick="toggleOption(this)">Core Pack</button>
+          <button type="button" class="form-option" onclick="toggleOption(this)">Plus Pack</button>
+          <button type="button" class="form-option" onclick="toggleOption(this)">Prime Pack</button>
+          <button type="button" class="form-option" onclick="toggleOption(this)">Essential Pack</button>
         </div>
       </div>
       <div class="form-group"><label class="form-label">Mesajınız</label><textarea class="form-textarea" name="mesaj" placeholder="Projenizi kısaca anlatın..."></textarea></div>
@@ -1107,6 +920,32 @@ img, svg { max-width: 100%; height: auto; }
   </div>
 </section>
 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo-wrap">
+      <div class="footer-logo-mark"></div>
+      <div class="footer-brand">Pure Pixel<span>Studio — İstanbul</span></div>
+    </div>
+    <nav class="footer-nav">
+      <a href="#about">Hakkında</a>
+      <a href="#services">Hizmetler</a>
+      <a href="#brands">Markalar</a>
+      <a href="portfolio.html">Portföy</a>
+      <a href="#contact">İletişim</a>
+    </nav>
+    <div class="footer-socials">
+      <a href="https://instagram.com/purepixel.studio" target="_blank">Instagram</a>
+      <a href="https://tr.linkedin.com/company/purepixelstudio" target="_blank">LinkedIn</a>
+      <a href="https://www.behance.net/PurePixelStudio" target="_blank">Behance</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Pure Pixel Studio. Tüm hakları saklıdır.</p>
+    <p class="footer-tagline">Every frame tells a story.</p>
+  </div>
+</footer>
+
 <button class="back-to-top" id="backToTop" aria-label="Yukarı çık" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
@@ -1114,20 +953,6 @@ img, svg { max-width: 100%; height: auto; }
 window.addEventListener('load', () => {
   document.getElementById('pageLoader').classList.add('hidden');
 });
-
-/* VIDEO LAZY LOAD — sadece ekranda görünürse yükle & oynat */
-const videoObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const video = entry.target;
-    if(entry.isIntersecting) {
-      if(video.preload === 'none') video.preload = 'metadata';
-      video.play().catch(()=>{});
-    } else {
-      video.pause();
-    }
-  });
-}, { rootMargin: '200px 0px' });
-document.querySelectorAll('.lazy-video').forEach(v => videoObserver.observe(v));
 
 /* CURSOR */
 const cursor=document.getElementById('cursor');
@@ -1148,7 +973,7 @@ if(!isTouch){
     follower.style.left=fx+'px'; follower.style.top=fy+'px';
     requestAnimationFrame(af);
   })();
-  document.querySelectorAll('a,button,.service-row,.portfolio-item,.brand-cell,.nav-contact-btn').forEach(el=>{
+  document.querySelectorAll('a,button,.brand-cell,.nav-contact-btn,.pack-card,.portfolio-preview-img').forEach(el=>{
     el.addEventListener('mouseenter',()=>follower.classList.add('hover'));
     el.addEventListener('mouseleave',()=>follower.classList.remove('hover'));
   });
@@ -1158,12 +983,10 @@ if(!isTouch){
 const navbar=document.getElementById('navbar');
 const backToTop=document.getElementById('backToTop');
 const sections=document.querySelectorAll('section[id]');
-const navLinks=document.querySelectorAll('.nav-links a');
+const navLinks=document.querySelectorAll('.nav-links > li > a');
 
 window.addEventListener('scroll',()=>{
-  navbar.classList.toggle('solid',window.scrollY>80);
   backToTop.classList.toggle('visible',window.scrollY>600);
-  
   let current='';
   sections.forEach(sec=>{
     const top=sec.offsetTop - 120;
@@ -1171,7 +994,8 @@ window.addEventListener('scroll',()=>{
   });
   navLinks.forEach(a=>{
     a.style.borderBottom='none';
-    if(a.getAttribute('href')==='#'+current){
+    const href=a.getAttribute('href');
+    if(href && href.startsWith('#') && href==='#'+current){
       a.style.borderBottom='2px solid var(--orange)';
     }
   });
@@ -1192,6 +1016,14 @@ function closeMobileMenu(){
   document.body.style.overflow='';
 }
 
+/* MOBILE BRANDS TOGGLE */
+function toggleMobileBrands(){
+  const toggle=document.getElementById('mobileBrandsToggle');
+  const list=document.getElementById('mobileBrandsList');
+  toggle.classList.toggle('open');
+  list.classList.toggle('open');
+}
+
 /* REVEAL */
 const ro=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
@@ -1207,369 +1039,49 @@ setInterval(()=>{
   heroImgs[hIdx].classList.add('active');
 },3800);
 
-/* PORTFOLIO SLIDERS */
-document.querySelectorAll('.portfolio-item[data-slides]').forEach(card=>{
-  const slides=JSON.parse(card.getAttribute('data-slides'));
-  if(!slides.length) return;
-  const bg=card.querySelector('.p-bg');
-  const dotWrap=card.querySelector('.p-slider-dot-wrap');
-  let idx=0;
-  bg.style.backgroundImage=`url('${slides[0]}')`;
-  if(slides.length>1){
-    slides.forEach((_,i)=>{
-      const d=document.createElement('button');
-      d.className='p-slider-dot'+(i===0?' active':'');
-      d.setAttribute('aria-label',`Slide ${i+1}`);
-      d.addEventListener('click',ev=>{ev.stopPropagation();goTo(i);});
-      dotWrap.appendChild(d);
-    });
-    const dots=dotWrap.querySelectorAll('.p-slider-dot');
-    function goTo(i){
-      idx=i;
-      bg.style.backgroundImage=`url('${slides[idx]}')`;
-      dots.forEach((d,j)=>d.classList.toggle('active',j===idx));
-    }
-    /* Auto-timer is now handled by hover controls below */
-  }
-});
-
-/* VIDEO PORTFOLIO ITEM - hover'da video durur, foto slider devreye girer */
-document.querySelectorAll('.portfolio-item[data-slides] .portfolio-video-bg').forEach(video=>{
-  const card = video.closest('.portfolio-item');
-  const bg = card.querySelector('.p-bg');
-  const slides = JSON.parse(card.getAttribute('data-slides'));
-  let idx = 0, timer;
-  card.addEventListener('mouseenter', ()=>{
-    video.pause();
-    bg.style.backgroundImage = `url('${slides[0]}')`;
-    bg.style.opacity = '1';
-    timer = setInterval(()=>{ idx=(idx+1)%slides.length; bg.style.backgroundImage=`url('${slides[idx]}')`; }, 1800);
-  });
-  card.addEventListener('mouseleave', ()=>{
-    clearInterval(timer);
-    bg.style.opacity = '0';
-    idx = 0;
-    video.play();
-  });
-});
-
-/* PORTFOLIO HOVER CONTROLS — inject prev/next/zoom buttons */
-(function(){
-  const chevronRight = '<svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg>';
-  const chevronLeft = '<svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg>';
-  const zoomIcon = '<svg viewBox="0 0 20 20" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M14 14l4 4"/><path d="M6.5 8.5h4M8.5 6.5v4"/></svg>';
-
-  document.querySelectorAll('.portfolio-item').forEach(card => {
-    const slides = card.getAttribute('data-slides');
-    let slideArr = [];
-    let hasMultiSlides = false;
-    if(slides) {
-      try { slideArr = JSON.parse(slides); } catch(e){}
-      hasMultiSlides = slideArr.length > 1;
-    }
-
-    // Mark cards with multiple slides
-    if(hasMultiSlides) card.setAttribute('data-multi-slide','');
-
-    // Create controls wrapper
-    const ctrl = document.createElement('div');
-    ctrl.className = 'p-hover-controls';
-
-    // Prev button
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'p-ctrl-prev';
-    prevBtn.innerHTML = '<span class="p-ctrl-prev-icon">' + chevronLeft + '</span>';
-    prevBtn.setAttribute('aria-label','Önceki fotoğraf');
-    ctrl.appendChild(prevBtn);
-
-    // Zoom button (center)
-    const zoomBtn = document.createElement('button');
-    zoomBtn.className = 'p-ctrl-zoom';
-    zoomBtn.innerHTML = zoomIcon;
-    zoomBtn.setAttribute('aria-label','Büyüt');
-    ctrl.appendChild(zoomBtn);
-
-    // Next button
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'p-ctrl-next';
-    nextBtn.innerHTML = '<span class="p-ctrl-next-icon">' + chevronRight + '</span>';
-    nextBtn.setAttribute('aria-label','Sonraki fotoğraf');
-    ctrl.appendChild(nextBtn);
-
-    card.appendChild(ctrl);
-
-    // Wire up next/prev for multi-slide items
-    if(hasMultiSlides) {
-      const bg = card.querySelector('.p-bg');
-      const dots = card.querySelectorAll('.p-slider-dot');
-      
-      // Get current index from dots
-      function getCurrentIdx() {
-        let cur = 0;
-        dots.forEach((d,j) => { if(d.classList.contains('active')) cur = j; });
-        return cur;
-      }
-      function goToSlide(i) {
-        bg.style.backgroundImage = "url('" + slideArr[i] + "')";
-        dots.forEach((d,j) => d.classList.toggle('active', j === i));
-      }
-
-      // Store ref to auto-timer so we can reset it
-      let autoTimer = null;
-      function resetAutoTimer() {
-        if(autoTimer) clearInterval(autoTimer);
-        autoTimer = setInterval(() => {
-          const cur = getCurrentIdx();
-          goToSlide((cur + 1) % slideArr.length);
-        }, 1800);
-      }
-      card.addEventListener('mouseenter', () => { resetAutoTimer(); });
-      card.addEventListener('mouseleave', () => { if(autoTimer) clearInterval(autoTimer); autoTimer = null; });
-
-      nextBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        const cur = getCurrentIdx();
-        goToSlide((cur + 1) % slideArr.length);
-        resetAutoTimer();
-      });
-      prevBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        const cur = getCurrentIdx();
-        goToSlide((cur - 1 + slideArr.length) % slideArr.length);
-        resetAutoTimer();
-      });
-    }
-
-    // Wire up zoom — triggers the lightbox
-    zoomBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      const nameEl = card.querySelector('.p-name');
-      const catEl = card.querySelector('.p-category');
-      const label = (nameEl ? nameEl.textContent : '') + (catEl ? ' • ' + catEl.textContent : '');
-
-      // Video item?
-      const videoEl = card.querySelector('.portfolio-video-bg');
-      if (videoEl && !card.getAttribute('data-slides')) {
-        const src = videoEl.querySelector('source')?.src || videoEl.src;
-        document.querySelector('.lb-overlay').__openLightbox(src, 'video', label);
-        return;
-      }
-
-      // Photo item — get current slide
-      const bg = card.querySelector('.p-bg');
-      if (bg) {
-        const bgImg = bg.style.backgroundImage;
-        const match = bgImg.match(/url\(['"]?([^'"]+)['"]?\)/);
-        if (match) {
-          document.querySelector('.lb-overlay').__openLightbox(match[1], 'image', label);
-          return;
-        }
-      }
-
-      // Fallback for video items
-      if (videoEl) {
-        const src = videoEl.querySelector('source')?.src || videoEl.src;
-        document.querySelector('.lb-overlay').__openLightbox(src, 'video', label);
-      }
-    });
-  });
-})();
-
-/* FORM */
-function toggleOption(el){el.classList.toggle('active');}
-function handleSubmit(e){
-  e.preventDefault();
-  const secili = [...document.querySelectorAll('.form-option.active')].map(o=>o.textContent).join(', ');
-  document.getElementById('hizmetlerInput').value = secili || 'Belirtilmedi';
-  const btn = e.target.querySelector('.form-submit');
-  btn.textContent = 'Gönderiliyor...';
-  btn.disabled = true;
-
-  fetch(e.target.action, {
-    method: 'POST',
-    body: new FormData(e.target),
-    headers: { 'Accept': 'application/json' }
-  }).then(res => {
-    if(res.ok){
-      btn.textContent = '✓ Mesajınız İletildi!';
-      btn.style.background = '#2d7a2d';
-      e.target.reset();
-      document.querySelectorAll('.form-option.active').forEach(o=>o.classList.remove('active'));
-      setTimeout(()=>{ btn.textContent='Mesaj Gönder →'; btn.style.background=''; btn.disabled=false; }, 4000);
-    } else {
-      btn.textContent = '✗ Hata';
-      btn.style.background = '#c0392b';
-      btn.disabled = false;
-      setTimeout(()=>{ btn.textContent='Mesaj Gönder →'; btn.style.background=''; }, 3000);
-    }
-  }).catch(()=>{
-    btn.textContent = '✗ Hata';
-    btn.style.background = '#c0392b';
-    btn.disabled = false;
-    setTimeout(()=>{ btn.textContent='Mesaj Gönder →'; btn.style.background=''; }, 3000);
-  });
+/* SECTION TOGGLE — animated accordion */
+function toggleSection(btn){
+  const content=btn.nextElementSibling;
+  const isOpen=content.classList.contains('open');
+  btn.classList.toggle('open',!isOpen);
+  content.classList.toggle('open',!isOpen);
 }
 
-/* LIGHTBOX WITH BRAND GALLERY NAVIGATION */
-(function(){
-  const overlay = document.getElementById('lbOverlay');
-  const box     = document.getElementById('lbBox');
-  const closeBtn= document.getElementById('lbClose');
-  const info    = document.getElementById('lbInfo');
-  const prevBtn = document.getElementById('lbPrev');
-  const nextBtn = document.getElementById('lbNext');
-  const counter = document.getElementById('lbCounter');
-  let isOpen = false;
+/* Legacy alias */
+function togglePlan(btn){ toggleSection(btn); }
 
-  // Build brand galleries: group all media (images+videos) by brand name
-  const brandGalleries = {};
-  document.querySelectorAll('.portfolio-item').forEach(card => {
-    const nameEl = card.querySelector('.p-name');
-    if(!nameEl) return;
-    const brand = nameEl.textContent.trim();
-    if(!brandGalleries[brand]) brandGalleries[brand] = [];
-
-    // Collect all slides from data-slides
-    const slidesAttr = card.getAttribute('data-slides');
-    if(slidesAttr) {
-      try {
-        const slides = JSON.parse(slidesAttr);
-        slides.forEach(s => {
-          if(!brandGalleries[brand].find(m => m.src === s)) {
-            brandGalleries[brand].push({ src: s, type: 'image' });
-          }
-        });
-      } catch(e){}
-    }
-
-    // Collect video sources
-    const videoEl = card.querySelector('.portfolio-video-bg');
-    if(videoEl) {
-      const src = videoEl.querySelector('source')?.src || videoEl.src;
-      if(src && !brandGalleries[brand].find(m => m.src === src)) {
-        brandGalleries[brand].push({ src: src, type: 'video' });
-      }
+/* SELECT PACK - pre-fill contact form */
+function selectPack(packName){
+  const options=document.querySelectorAll('.form-option');
+  options.forEach(opt=>{
+    if(opt.textContent.trim()===packName){
+      opt.classList.add('active');
     }
   });
+  updateHizmetler();
+}
 
-  let currentGallery = [];
-  let currentIdx = 0;
-  let currentBrand = '';
+/* FORM OPTIONS */
+function toggleOption(el){
+  el.classList.toggle('active');
+  updateHizmetler();
+}
+function updateHizmetler(){
+  const selected=[...document.querySelectorAll('.form-option.active')].map(o=>o.textContent.trim()).join(', ');
+  document.getElementById('hizmetlerInput').value=selected;
+}
 
-  function showMedia(idx) {
-    currentIdx = idx;
-    const media = currentGallery[idx];
-    box.innerHTML = '';
-
-    if(media.type === 'video') {
-      const v = document.createElement('video');
-      v.src = media.src; v.autoplay = true; v.muted = true; v.loop = true; v.playsinline = true;
-      v.style.cssText = 'display:block;max-width:88vw;max-height:88vh;width:auto;height:auto;object-fit:contain;';
-      box.appendChild(v);
-    } else {
-      const img = document.createElement('img');
-      img.src = media.src;
-      img.style.cssText = 'display:block;max-width:88vw;max-height:88vh;width:auto;height:auto;object-fit:contain;';
-      box.appendChild(img);
-    }
-
-    // Update counter
-    counter.textContent = (idx + 1) + ' / ' + currentGallery.length;
-
-    // Show/hide nav arrows
-    if(currentGallery.length > 1) {
-      prevBtn.classList.add('lb-nav-visible');
-      nextBtn.classList.add('lb-nav-visible');
-    } else {
-      prevBtn.classList.remove('lb-nav-visible');
-      nextBtn.classList.remove('lb-nav-visible');
-    }
-  }
-
-  function openLightbox(src, type, label) {
-    // Find brand from label (format: "BrandName • Category")
-    const brandName = label ? label.split(' • ')[0].trim() : '';
-    currentBrand = brandName;
-    currentGallery = brandGalleries[brandName] || [{ src, type }];
-    
-    // Find the index of the current src in gallery
-    currentIdx = currentGallery.findIndex(m => m.src === src);
-    if(currentIdx < 0) currentIdx = 0;
-
-    info.textContent = label || '';
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    isOpen = true;
-
-    showMedia(currentIdx);
-  }
-
-  // Expose for hover controls
-  overlay.__openLightbox = openLightbox;
-
-  function closeLightbox() {
-    overlay.classList.remove('open');
-    prevBtn.classList.remove('lb-nav-visible');
-    nextBtn.classList.remove('lb-nav-visible');
-    document.body.style.overflow = '';
-    isOpen = false;
-    setTimeout(() => { box.innerHTML = ''; }, 400);
-  }
-
-  function goNext() {
-    if(currentGallery.length <= 1) return;
-    showMedia((currentIdx + 1) % currentGallery.length);
-  }
-  function goPrev() {
-    if(currentGallery.length <= 1) return;
-    showMedia((currentIdx - 1 + currentGallery.length) % currentGallery.length);
-  }
-
-  nextBtn.addEventListener('click', e => { e.stopPropagation(); goNext(); });
-  prevBtn.addEventListener('click', e => { e.stopPropagation(); goPrev(); });
-  closeBtn.addEventListener('click', closeLightbox);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeLightbox(); });
-  document.addEventListener('keydown', e => {
-    if(!isOpen) return;
-    if(e.key === 'Escape' || e.key === 'Backspace') closeLightbox();
-    if(e.key === 'ArrowRight') goNext();
-    if(e.key === 'ArrowLeft') goPrev();
-  });
-
-  // Attach to portfolio items
-  document.querySelectorAll('.portfolio-item').forEach(card => {
-    card.addEventListener('click', e => {
-      // Don't open if clicking a dot button or nav controls (prev/next)
-      if (e.target.closest('.p-slider-dot')) return;
-      if (e.target.closest('.p-ctrl-next')) return;
-      if (e.target.closest('.p-ctrl-prev')) return;
-
-      // Get label
-      const nameEl = card.querySelector('.p-name');
-      const catEl  = card.querySelector('.p-category');
-      const label  = (nameEl ? nameEl.textContent : '') + (catEl ? ' • ' + catEl.textContent : '');
-
-      // Video item?
-      const videoEl = card.querySelector('.portfolio-video-bg');
-      if (videoEl) {
-        const src = videoEl.querySelector('source')?.src || videoEl.src;
-        openLightbox(src, 'video', label);
-        return;
-      }
-
-      // Photo item — get current slide
-      const bg = card.querySelector('.p-bg');
-      if (bg) {
-        const bgImg = bg.style.backgroundImage;
-        const match = bgImg.match(/url\(['"]?([^'"]+)['"]?\)/);
-        if (match) {
-          openLightbox(match[1], 'image', label);
-          return;
-        }
-      }
-    });
-  });
-})();
+/* FORM SUBMIT */
+function handleSubmit(e){
+  updateHizmetler();
+  const btn=e.target.querySelector('.form-submit');
+  btn.textContent='Gönderiliyor...';
+  btn.style.background='var(--orange)';
+  setTimeout(()=>{
+    btn.textContent='Mesaj Gönder →';
+    btn.style.background='';
+  },3000);
+}
 </script>
 </body>
 </html>
