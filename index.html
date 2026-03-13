@@ -594,6 +594,63 @@ img, svg { max-width: 100%; height: auto; }
   }
 }
 </style>
+
+<style>
+/* MOBILE NAV FIX */
+@media (max-width:900px){
+
+/* üstteki görünmeyen menüyü tamamen kaldır */
+.nav-links,
+.nav-dropdown,
+.nav-dropdown-menu{
+display:none !important;
+}
+
+/* navbar görünür */
+#navbar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:70px;
+background:#f5f0e8 !important;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 16px;
+z-index:9999;
+}
+
+/* logolar görünür */
+.nav-logo-img{
+display:block !important;
+height:42px !important;
+width:auto !important;
+}
+
+/* hamburger görünür */
+.nav-hamburger{
+display:flex !important;
+}
+
+/* sayfa navbar altından başlasın */
+body{
+padding-top:70px !important;
+}
+
+}
+</style>
+
+
+<style>
+/* REMOVE TOP TEXT MENU ON DESKTOP */
+@media (min-width:901px){
+.nav-links{
+display:none !important;
+}
+}
+</style>
+
 </head>
 <body>
 
