@@ -528,6 +528,71 @@ img, svg { max-width: 100%; height: auto; }
     padding-top: 60px !important;
   }
 }
+/* KESİN ÇÖZÜM: MOBİL BEYAZ BAR SIFIRLAMA */
+@media (max-width: 900px) {
+  /* 1. Navigasyonun kendisini ve tüm boşluklarını sıfırla */
+  nav {
+    padding: 5px 16px !important;
+    height: 70px !important; /* Yüksekliği net olarak sabitledik */
+    min-height: 70px !important;
+    background: var(--cream) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+  }
+
+  /* 2. Beyaz barı yaratan en büyük etkeni (link listesini) tamamen yok et */
+  /* Bu linkler zaten Hamburger menüde mevcut. */
+  nav .nav-links {
+    display: none !important; 
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 3. Logoların dikeyde barı şişirmesini engelle */
+  .nav-left, .nav-logo {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .nav-logo-img {
+    height: 45px !important; /* Logoları kibarlaştırdık */
+    width: auto !important;
+    margin: 0 !important;
+  }
+
+  /* 4. Sağ taraftaki butonu ve hamburgeri hizala */
+  .nav-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  /* 5. Butonun boyutu barı aşmasın */
+  .nav-contact-btn {
+    padding: 8px 14px !important;
+    font-size: 10px !important;
+    white-space: nowrap !important;
+  }
+
+  /* 6. Hamburger butonunu görünür kıl (Eğer gizlendiyse) */
+  .nav-hamburger {
+    display: flex !important;
+  }
+
+  /* 7. Sayfanın en tepesindeki body boşluğunu navbar kadar ayarla */
+  body {
+    padding-top: 70px !important;
+  }
+}
 </style>
 </head>
 <body>
