@@ -470,46 +470,62 @@ img, svg { max-width: 100%; height: auto; }
   .brands-grid { grid-template-columns: 1fr 1fr; }
   .portfolio-preview-grid { grid-template-columns: 1fr 1fr; }
 }
-/* NAVBAR BEYAZ BAR SIFIRLAMA */
+/* KESİN ÇÖZÜM: MOBİL NAVBARDAN BEYAZ BARI KALDIRMA */
 @media (max-width: 900px) {
+  /* Navbar'ı tamamen daralt ve arka planı sabitle */
   nav {
-    padding: 0 16px !important; /* Tüm iç boşlukları sıfıra çeker */
-    height: 70px !important;    /* Bar yüksekliğini sabitler */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    overflow: hidden;           /* Taşmaları engeller */
+    padding: 10px 16px !important;
+    height: auto !important;
+    min-height: 60px !important;
+    background: var(--cream) !important; /* Arka planı korur */
+    flex-wrap: nowrap !important; /* Elemanların alt alta geçmesini engeller */
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
   }
 
-  /* Logoların dikeyde taşmasını engelleme */
-  .nav-left, .nav-logo {
+  /* Logoların boyutunu küçülterek dikeyde yer kaplamasını önle */
+  .nav-logo-img {
+    height: 40px !important; /* 118px'den 40px'e düşürerek barı daralttık */
+    width: auto !important;
+  }
+
+  /* Beyaz boşluk yaratan ana faktör: Alttaki link listesini gizle */
+  /* Bu linkler zaten Hamburger Menü (mobile-menu) içinde var */
+  .nav-links {
+    display: none !important; 
+  }
+
+  /* Nav-left ve Nav-right'ı aynı hizada tut */
+  .nav-left {
+    gap: 8px !important;
+    flex: 0 1 auto !important;
+  }
+
+  .nav-right {
     display: flex !important;
     align-items: center !important;
-    height: 100% !important;
     gap: 10px !important;
   }
 
-  .nav-logo-img {
-    height: 40px !important;    /* 118px olan yüksekliği barın içine sığdırır */
-    width: auto !important;
-    margin: 0 !important;
-  }
-
-  /* Mobilde alta sarkan linkleri gizle (Menüden ulaşılsın) */
-  .nav-links {
-    display: none !important;   /* O beyaz boşluğu yaratan ana etkenlerden biri buydu */
-  }
-
-  /* Butonun boyutunu barla uyumlu yap */
+  /* Proje Başlat butonunu mobilde kibarlaştır */
   .nav-contact-btn {
-    padding: 8px 12px !important;
-    font-size: 10px !important;
-    margin: 0 !important;
+    padding: 6px 12px !important;
+    font-size: 9px !important;
+    letter-spacing: 1px !important;
   }
 
-  /* Hero bölümünü yukarı çekerek navbar ile birleştir */
-  #hero {
-    margin-top: 0 !important;
+  /* Hamburger butonunu (varsa) görünür kıl */
+  /* Eğer hamburger butonunu gizlediysen, buradan açabilirsin */
+  .nav-hamburger {
+    display: flex !important; 
+  }
+
+  /* Sayfa başındaki boşluğu navbar yüksekliğine göre ayarla */
+  body {
+    padding-top: 60px !important;
   }
 }
 </style>
