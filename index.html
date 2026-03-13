@@ -470,100 +470,47 @@ img, svg { max-width: 100%; height: auto; }
   .brands-grid { grid-template-columns: 1fr 1fr; }
   .portfolio-preview-grid { grid-template-columns: 1fr 1fr; }
 }
-/* MOBILE UI/UX OPTIMIZATION - ADDITIONAL */
+/* Üstteki beyaz barı kaldırmak ve mobil header'ı düzeltmek için */
 @media (max-width: 900px) {
-  /* Navigasyon iyileştirmesi: Logoların birbirine girmemesi için */
-  .nav-left {
-    gap: 8px;
+  nav {
+    padding-top: 0 !important; /* Üst boşluğu sıfırlar */
+    padding-bottom: 0 !important;
+    height: auto;
+    min-height: 70px; /* Standart bir mobil bar yüksekliği */
     display: flex;
     align-items: center;
-  }
-  
-  .nav-logo-img {
-    height: 60px !important; /* Mobilde daha kompakt bir header */
-  }
-
-  /* Hizmet Paketleri (Packs): Mobilde daha iyi okunabilirlik */
-  .svc-pack {
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03); /* Hafif belirginlik */
-    padding: 30px 20px !important;
-  }
-
-  .svc-pack-name {
-    font-size: 24px !important;
-    margin-bottom: 16px;
-  }
-
-  /* Tıklama Alanları: Mobilde butonlar ve toggle'lar daha kolay basılabilir olmalı */
-  .svc-toggle, .pack-cta, .btn-main, .form-option {
-    min-height: 48px; /* Apple ve Google UX standartı */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-  }
-
-  .svc-toggle span {
-    font-size: 16px !important; /* Mobilde daha okunaklı font */
-  }
-
-  /* Form Alanları: Mobilde klavye açıldığında zoom yapmaması için */
-  .form-input, .form-textarea {
-    font-size: 16px !important; 
-    padding: 16px 0;
-  }
-
-  /* Form Seçenekleri: Mobilde daha kolay seçim için buton arası boşluklar */
-  .form-options {
-    gap: 12px;
-  }
-  
-  .form-option {
-    padding: 12px 18px;
-    flex: 1 1 45%; /* Yan yana ikişerli dizilim */
-    text-align: center;
-  }
-
-  /* Hero Bölümü: Mobilde görsel ve metin dengesi */
-  .hero-title {
-    font-size: 42px !important;
-    line-height: 1.1;
-  }
-
-  .hero-desc {
-    font-size: 16px !important;
-    opacity: 0.8;
-  }
-
-  /* Alt Bilgi (Footer): Mobilde linkler arası boşluk */
-  .footer-nav {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    width: 100%;
-  }
-
-  .footer-socials {
-    margin-top: 20px;
     justify-content: space-between;
-    width: 100%;
+  }
+
+  .nav-left {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-logo-img {
+    height: 50px !important; /* Logoları barın içine sığacak şekilde küçültür */
+    width: auto;
+    margin: 5px 0;
+  }
+
+  /* Logoların dikeyde ortalanması için */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  /* Sayfa içeriğinin navbar altında kalmaması için body'e verilen payı düzenler */
+  section[id] {
+    scroll-margin-top: 70px;
   }
 }
 
-/* Küçük ekranlar için ekstra boşluk ayarı */
-@media (max-width: 480px) {
-  .hero-left {
-    padding-top: 140px; /* Navbar'ın altında kalmaması için */
-  }
-  
-  .svc-content-nums span {
-    font-size: 13px;
-    border-left: 2px solid var(--orange);
-    padding-left: 10px;
-    margin-bottom: 8px;
-  }
+/* Navigasyonun mobildeki genel beyazlık etkisini kırmak için */
+#navbar {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
 </style>
 </head>
